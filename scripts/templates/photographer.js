@@ -14,12 +14,17 @@ function photographerTemplate(data) {
     const p = document.createElement("p");
     const p2 = document.createElement("p");
 
+    a.setAttribute("role", "lien");
+    a.setAttribute(
+      "aria-label",
+      `Lien vers la page du photographe ${name}`
+    );
     a.setAttribute("href", `photographer.html?id=${id}`);
     a.setAttribute("class", "photographer_card");
     div.setAttribute("class", "photographer_img__container");
     div2.setAttribute("class", "photographer_text__container");
     img.setAttribute("src", picture);
-    img.setAttribute("alt", name);
+    img.setAttribute("alt", `Portrait de ${name}`);
 
     h2.textContent = name;
     h3.textContent = `${city}, ${country}`;
