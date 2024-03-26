@@ -101,14 +101,26 @@ function displayGalleryAndSort({ photographer, media }) {
       mediaElement = document.createElement("img");
       mediaElement.setAttribute("src", `/assets/images/${photographer.name}/${medium.image}`);
     } else if (medium.video) {
+      const videoContainer = document.createElement("div");
+      videoContainer.setAttribute("class", "video-container");
+
       mediaElement = document.createElement("video");
       mediaElement.setAttribute("src", `/assets/images/${photographer.name}/${medium.video}`);
+
+      const playIcon = document.createElement("div");
+      playIcon.setAttribute("class", "play-icon");
+
+      videoContainer.appendChild(mediaElement);
+      videoContainer.appendChild(playIcon);
+
       mediaElement.addEventListener("mouseover", function () {
         this.play();
       });
       mediaElement.addEventListener("mouseout", function () {
         this.pause();
       });
+
+      card.appendChild(videoContainer);
     }
     mediaElement.setAttribute("alt", medium.title);
 
