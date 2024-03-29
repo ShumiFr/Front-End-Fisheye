@@ -15,10 +15,38 @@
       </a>
     </header>
     <main id="main"></main>
+
+    <!-- Picture Modal -->
+
+    <dialog id="picture_modal" aria-label="image closeup view">
+      <form method="dialog">
+        <button class="picture_close">
+          <img src="assets/icons/close_picture.svg" />
+        </button>
+      </form>
+      <div class="picture_modal_button">
+        <button id="left_arrow">
+          <img src="assets/icons/arrow.svg" />
+        </button>
+        <div class="picture_modal_content">
+          <img id="picture_modal_img" src="" />
+          <video id="picture_modal_video"></video>
+          <h2 id="picture_modal_title">Arc en ciel</h2>
+        </div>
+        <button id="right_arrow">
+          <img src="assets/icons/arrow.svg" />
+        </button>
+      </div>
+    </dialog>
+
+    <!-- Contact Modal -->
+
     <div id="contact_modal">
       <div class="modal">
         <header>
-          <h2>Contactez-moi</h2>
+          <div id="modal_header">
+            <h2>Contactez-moi</h2>
+          </div>
           <img src="assets/icons/close.svg" onclick="closeModal()" />
         </header>
         <form>
