@@ -140,18 +140,10 @@ function displayGalleryAndSort({ photographer, media }) {
     let currentImageIndex = 0;
 
     mediaElement.addEventListener("click", function () {
-      const currentMedia = media[currentImageIndex];
-      if (currentMedia.image) {
-        dialogImg.src = `/assets/images/${photographer.name}/${currentMedia.image}`;
-        dialogImg.style.display = "block";
-        dialogVideo.style.display = "none";
-      } else if (currentMedia.video) {
-        dialogVideo.src = `/assets/images/${photographer.name}/${currentMedia.video}`;
-        dialogVideo.style.display = "block";
-        dialogImg.style.display = "none";
-      }
-      dialogTitle.textContent = medium.title;
+      dialogImg.setAttribute("src", this.src);
       dialog.style.display = "flex";
+
+      dialogTitle.textContent = medium.title;
       dialog.open = true;
     });
 
