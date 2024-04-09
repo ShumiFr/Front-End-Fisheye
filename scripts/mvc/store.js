@@ -6,27 +6,31 @@
 
   // Crée un objet Store pour stocker les données
   function Store(name) {
-    // Stocke le nom de la base de données
     this._dbName = name;
 
-    // Vérifie si la mémoire est vide et récupère les données si c'est le cas
     if (!Memory[name]) {
-      fetch("../../data/photographers.json")
+      return fetch("../../data/photographers.json")
         .then((response) => response.json())
         .then((data) => {
           Memory[name] = {
             photographers: data.photographers,
             photos: data.media,
           };
-          console.log("Données récupérées :", data); // Affiche les données récupérées
-          console.log("Photographes : ", Memory[name].photographers); // Affiche les photographes
-          console.log("Photos : ", Memory[name].photos); // Affiche les photos
+          console.log("Données récupérées :", data);
+          console.log("Photographes : ", Memory[name].photographers);
+          console.log("Photos : ", Memory[name].photos);
         })
         .catch((error) => {
           console.error("Erreur lors de la récupération du JSON :", error);
         });
     }
   }
+
+  // Récupère toutes les données de la mémoire
+  Store.prototype.findAll = function (query) {
+    // Si aucune requête n'est fournie, retourne toutes les données de la mémoire
+    return Memory[this._dbName];
+  };
 
   // Affiche le contenu de la mémoire dans la console
   Store.prototype.displayMemory = function () {
