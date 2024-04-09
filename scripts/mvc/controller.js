@@ -1,22 +1,28 @@
 (function (window) {
   "use strict";
 
-  // Crée un contrôleur pour gérer les données
   function Controller(model, view) {
-    this.model = model;
-    this.view = view;
+    const self = this;
+    self.model = model;
+    self.view = view;
   }
 
-  // Initialise le contrôleur
   Controller.prototype.init = function () {
-    this.showAllPhotos();
+    this.photographerId = this.getPhotographerIdFromUrl();
+    this.showHeader();
   };
 
-  // Affiche toutes les photos
-  Controller.prototype.showAllPhotos = function () {
-    this.model.read((data) => {
-      this.view.render("showAllPhotos", data);
+  Controller.prototype.showHeader = function () {
+    const self = this;
+    self.model.read(function (data) {
+      const photographerData = data.find((photographer) => photographer.id === self.photographerId);
+      self.view.showHeader(photographerData);
     });
+  };
+
+  Controller.prototype.getPhotographerIdFromUrl = function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    return Number(urlParams.get("id"));
   };
 
   window.app = window.app || {};

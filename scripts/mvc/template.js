@@ -1,22 +1,22 @@
 (function (window) {
   "use strict";
 
-  // Crée un template pour afficher les données
   function Template() {
-    this.cardListTemplate = ({ title, desc }) => `
-        <div class="card">
-          <h3 class="card__title">${title}</h3>
-          <p class="card__desc">${desc}</p>
+    this.headerTemplate = ({ name, city, tagline, portrait }) => `
+        <div class="photographer-header__description">
+            <h1 class="name">${name}</h1>
+            <p class="city">${city}</p>
+            <p class="tagline">${tagline}</p>
         </div>
-        `;
+        <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
+        <div class="photographer-header__img">
+            <img src="/assets/photographers/${portrait}" alt="${name}" />
+        </div>
+    `;
   }
 
-  // Crée une liste de cartes à partir des données
-  Template.prototype.buildCardList = function (data) {
-    return data.reduce((v, item) => {
-      let template = this.cardListTemplate(item);
-      return v + template;
-    }, "");
+  Template.prototype.buildHeader = function (data) {
+    return this.headerTemplate(data);
   };
 
   window.app = window.app || {};

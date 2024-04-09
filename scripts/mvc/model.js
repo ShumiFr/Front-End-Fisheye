@@ -1,23 +1,19 @@
 (function (window) {
   "use strict";
 
-  // Crée un modèle pour gérer les données
+  // Définition du constructeur du modèle
   function Model(storage) {
     this.storage = storage;
   }
 
-  // Récupère les données de la mémoire
-  Model.prototype.read = function (query, callback) {
-    const data = this.storage.findAll(query); // Récupère les données de la mémoire
-
-    // Exécute le callback avec les données
-    if (typeof callback === "function") {
-      callback(data);
-    }
-
-    return data;
+  // Méthode pour lire les données du modèle
+  Model.prototype.read = function (query) {
+    return this.storage.findAll(query);
   };
 
+  // Définition de l'objet global "app" s'il n'existe pas déjà
   window.app = window.app || {};
+
+  // Assignation du constructeur du modèle à l'objet global "app"
   window.app.Model = Model;
 })(window);
