@@ -3,12 +3,12 @@
 
   // Définition du constructeur du modèle
   function Model(storage) {
-    this.storage = storage;
+    this.storage = storage; // Stockage des données
   }
 
   // Méthode pour lire les données du modèle
   Model.prototype.read = function (query) {
-    return this.storage.findAll(query);
+    return this.storage.findAll(query); // Récupération de toutes les données
   };
 
   // Définition de l'objet global "app" s'il n'existe pas déjà
