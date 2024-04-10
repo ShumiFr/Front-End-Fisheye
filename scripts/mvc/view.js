@@ -12,6 +12,11 @@
     this._replaceWith(this.$header, this.template.buildHeader(params)); // Remplacement du contenu de l'en-tête par le contenu généré par le template
   };
 
+  View.prototype.showGalleryCards = function (galleryCards) {
+    this.$gallery = qs(".photographer-gallery"); // Sélection de l'élément du DOM correspondant à la galerie
+    this._replaceWith(this.$gallery, galleryCards.join("")); // Remplacement du contenu de la galerie par le contenu généré par le template
+  };
+
   // Méthode pour afficher le modal de nom et contact
   View.prototype.showNameContactModal = function (params) {
     this.$nameModal = qById("modal_header"); // Sélection de l'élément du DOM correspondant a la modal

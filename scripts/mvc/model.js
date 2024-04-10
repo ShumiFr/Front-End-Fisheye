@@ -7,8 +7,13 @@
   }
 
   // Méthode pour lire les données du modèle
-  Model.prototype.read = function (query) {
-    return this.storage.findAll(query); // Récupération de toutes les données
+  Model.prototype.findPhotographers = function (query) {
+    return this.storage.findPhotographers(query);
+  };
+
+  // Dans votre modèle
+  Model.prototype.findMedia = function (query) {
+    return this.storage.findMedia(query);
   };
 
   // Définition de l'objet global "app" s'il n'existe pas déjà

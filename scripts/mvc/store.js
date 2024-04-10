@@ -37,13 +37,27 @@
   };
 
   // Méthode pour récupérer tous les éléments
-  Store.prototype.findAll = function (callback) {
+  Store.prototype.findPhotographers = function (callback) {
     callback = callback || function () {}; // Fonction de rappel par défaut
 
     // Attend que les données soient chargées avant d'appeler la fonction de rappel
     this._dataPromise.then(() => {
       const entities = Memory[this._dbName].photographers; // Récupère les photographes depuis la mémoire
       // Appelle la fonction de rappel avec un tableau contenant tous les photographes
+      callback.call(
+        this,
+        Object.keys(entities).map((key) => entities[key])
+      );
+    });
+  };
+
+  Store.prototype.findMedia = function (callback) {
+    callback = callback || function () {}; // Fonction de rappel par défaut
+
+    // Attend que les données soient chargées avant d'appeler la fonction de rappel
+    this._dataPromise.then(() => {
+      const entities = Memory[this._dbName].media; // Récupère les médias depuis la mémoire
+      // Appelle la fonction de rappel avec un tableau contenant tous les médias
       callback.call(
         this,
         Object.keys(entities).map((key) => entities[key])
