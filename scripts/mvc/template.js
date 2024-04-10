@@ -16,28 +16,29 @@
         </div>
     `;
 
+    // Définition du template pour les cartes de la galerie
     this.galleryCardTemplate = ({ title, likes, image, video, photographerName }) => {
       let mediaElement = "";
       if (image) {
         mediaElement = `<img src="/assets/images/${photographerName}/${image}" alt="${title}" />`;
       } else if (video) {
         mediaElement = `
-          <div class="video-container">
-            <video src="/assets/images/${photographerName}/${video}" alt="${title}"></video>
-          </div>
-        `;
+      <div class="video-container">
+        <video src="/assets/images/${photographerName}/${video}" alt="${title}"></video>
+      </div>
+    `;
       } else {
         // Afficher un message d'erreur ou une image par défaut si ni image ni vidéo n'est défini
         mediaElement = `<p>Media not available</p>`;
       }
 
       return `
-        <div class="card">
-          ${mediaElement}
-          <h3>${title}</h3>
-          <p>${likes} <i class='fa-solid fa-heart'></i></p>
-        </div>
-      `;
+    <div class="card">
+      ${mediaElement}
+      <h3>${title}</h3>
+      <p>${likes} <i class='fa-solid fa-heart'></i></p>
+    </div>
+  `;
     };
 
     // Définition du template pour la modal de contact
@@ -57,6 +58,7 @@
     return this.galleryCardTemplate(data); // Génération du contenu de la carte de la galerie en utilisant le template
   };
 
+  // Ajout de la méthode buildContactModal au prototype de Template
   Template.prototype.buildContactModal = function (data) {
     return this.contactModalTemplate(data); // Génération du contenu de la modal en utilisant le template
   };

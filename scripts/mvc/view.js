@@ -12,6 +12,7 @@
     this._replaceWith(this.$header, this.template.buildHeader(params)); // Remplacement du contenu de l'en-tête par le contenu généré par le template
   };
 
+  // Méthode pour afficher les cartes de la galerie
   View.prototype.showGalleryCards = function (galleryCards) {
     this.$gallery = qs(".photographer-gallery"); // Sélection de l'élément du DOM correspondant à la galerie
     this._replaceWith(this.$gallery, galleryCards.join("")); // Remplacement du contenu de la galerie par le contenu généré par le template

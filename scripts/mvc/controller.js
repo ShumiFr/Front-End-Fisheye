@@ -10,20 +10,31 @@
 
   // Initialiser le contrôleur
   Controller.prototype.init = function () {
-    // Obtenir l'ID du photographe à partir de l'URL
-    this.photographerId = this.getPhotographerIdFromUrl();
+    this.photographerId = this.getPhotographerIdFromUrl(); // Obtenir l'ID du photographe à partir de l'URL
+    this.showHeader(); // Afficher l'en-tête
+    this.getPhotographerName(); // Obtenir le nom du photographe
+    this.showGalleryCards(); // Afficher les cartes de la galerie
+    this.showNameContactModal(); // Afficher le modal du nom et des coordonnées
+  };
 
-    // Afficher l'en-tête
-    this.showHeader();
+  // Obtenir l'ID du photographe à partir de l'URL
+  Controller.prototype.getPhotographerIdFromUrl = function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    return Number(urlParams.get("id"));
+  };
 
-    // Obtenir le nom du photographe
-    this.getPhotographerName();
-
-    // Afficher les cartes de la galerie
-    this.showGalleryCards();
-
-    // Afficher le modal du nom et des coordonnées
-    this.showNameContactModal();
+  // Obtenir le nom du photographe
+  Controller.prototype.getPhotographerName = function () {
+    const self = this;
+    return new Promise((resolve, reject) => {
+      self.model.findPhotographers(function (data) {
+        // Trouver les données du photographe correspondant à l'ID
+        const photographerData = data.find(
+          (photographer) => photographer.id === self.photographerId
+        );
+        resolve(photographerData.name);
+      });
+    });
   };
 
   // Afficher l'en-tête
@@ -38,19 +49,7 @@
     });
   };
 
-  Controller.prototype.getPhotographerName = function () {
-    const self = this;
-    return new Promise((resolve, reject) => {
-      self.model.findPhotographers(function (data) {
-        // Trouver les données du photographe correspondant à l'ID
-        const photographerData = data.find(
-          (photographer) => photographer.id === self.photographerId
-        );
-        resolve(photographerData.name);
-      });
-    });
-  };
-
+  // Afficher les cartes de la galerie
   Controller.prototype.showGalleryCards = async function () {
     const self = this;
     const photographerName = await this.getPhotographerName();
@@ -72,7 +71,7 @@
     });
   };
 
-  // Afficher le modal du nom et des coordonnées
+  // Afficher le nom dans la modal de contact
   Controller.prototype.showNameContactModal = function () {
     const self = this;
     self.model.findPhotographers(function (data) {
@@ -82,11 +81,6 @@
       // Afficher le modal du nom et des coordonnées en utilisant les données du photographe
       self.view.showNameContactModal(photographerData);
     });
-  };
-  // Obtenir l'ID du photographe à partir de l'URL
-  Controller.prototype.getPhotographerIdFromUrl = function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    return Number(urlParams.get("id"));
   };
 
   // Créer un espace de noms pour l'application et y assigner le contrôleur
