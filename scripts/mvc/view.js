@@ -3,11 +3,16 @@
 
   function View(template) {
     this.template = template;
-    this.$header = qs(".photographer-header");
   }
 
   View.prototype.showHeader = function (params) {
+    this.$header = qs(".photographer-header");
     this._replaceWith(this.$header, this.template.buildHeader(params));
+  };
+
+  View.prototype.showNameContactModal = function (params) {
+    this.$nameModal = qById("modal_header");
+    this._replaceWith(this.$nameModal, this.template.buildContactModal(params));
   };
 
   View.prototype._replaceWith = function (element, html) {

@@ -13,10 +13,19 @@
             <img src="/assets/photographers/${portrait}" alt="${name}" />
         </div>
     `;
+
+    this.contactModalTemplate = ({ name }) => `
+        <h2>Contactez-moi</h2>
+        <h2>${name}</h2>
+    `;
   }
 
   Template.prototype.buildHeader = function (data) {
     return this.headerTemplate(data);
+  };
+
+  Template.prototype.buildContactModal = function (data) {
+    return this.contactModalTemplate(data);
   };
 
   window.app = window.app || {};

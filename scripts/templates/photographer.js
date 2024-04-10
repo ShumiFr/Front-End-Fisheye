@@ -15,10 +15,7 @@ function photographerTemplate(data) {
     const p2 = document.createElement("p");
 
     a.setAttribute("role", "lien");
-    a.setAttribute(
-      "aria-label",
-      `Lien vers la page du photographe ${name}`
-    );
+    a.setAttribute("aria-label", `Lien vers la page du photographe ${name}`);
     a.setAttribute("href", `photographer.html?id=${id}`);
     a.setAttribute("class", "photographer_card");
     div.setAttribute("class", "photographer_img__container");

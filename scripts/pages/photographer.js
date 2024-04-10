@@ -11,55 +11,6 @@ async function getPhotographerData(id) {
   return { photographer, media };
 }
 
-// Fonction pour afficher les données du photographe
-function displayHeader(photographer) {
-  const main = document.getElementById("main");
-  const header = document.getElementById("modal_header");
-
-  const photographerHeader = document.createElement("div");
-  const description = document.createElement("div");
-  const name = document.createElement("h1");
-  const city = document.createElement("p");
-  const tagline = document.createElement("p");
-  const contactButton = document.createElement("button");
-  const imgDiv = document.createElement("div");
-  const img = document.createElement("img");
-  const photographerName = document.createElement("h2");
-
-  photographerHeader.setAttribute("class", "photograph-header");
-  description.setAttribute("class", "photographer-header__description");
-  name.setAttribute("class", "name");
-  city.setAttribute("class", "city");
-  tagline.setAttribute("class", "tagline");
-  contactButton.setAttribute("class", "contact_button");
-  contactButton.setAttribute("onclick", "displayModal()");
-  imgDiv.setAttribute("class", "photographer-header__img");
-  img.setAttribute("src", `/assets/photographers/${photographer.portrait}`);
-  img.setAttribute("alt", photographer.name);
-  photographerName.setAttribute("class", "photographer-name");
-  photographerName.setAttribute("alt", photographer.name);
-
-  name.textContent = photographer.name;
-  city.textContent = photographer.city;
-  tagline.textContent = photographer.tagline;
-  contactButton.textContent = "Contactez-moi";
-  photographerName.textContent = photographer.name;
-
-  description.appendChild(name);
-  description.appendChild(city);
-  description.appendChild(tagline);
-
-  imgDiv.appendChild(img);
-
-  photographerHeader.appendChild(description);
-  photographerHeader.appendChild(contactButton);
-  photographerHeader.appendChild(imgDiv);
-
-  header.appendChild(photographerName);
-
-  main.appendChild(photographerHeader);
-}
-
 function displayGalleryAndSort({ photographer, media }) {
   const main = document.getElementById("main");
 
