@@ -14,7 +14,7 @@
     this.showHeader(); // Afficher l'en-tête
     this.getPhotographerName(); // Obtenir le nom du photographe
     this.showGalleryCards(); // Afficher les cartes de la galerie
-    this.showNameContactModal(); // Afficher le modal du nom et des coordonnées
+    this.showNameContactModal(); // Afficher le nom dans la modal de contact
   };
 
   // Obtenir l'ID du photographe à partir de l'URL

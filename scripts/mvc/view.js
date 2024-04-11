@@ -18,7 +18,7 @@
     this._replaceWith(this.$gallery, galleryCards.join("")); // Remplacement du contenu de la galerie par le contenu généré par le template
   };
 
-  // Méthode pour afficher le modal de nom et contact
+  // Méthode pour afficher nom dans la modal de contact
   View.prototype.showNameContactModal = function (params) {
     this.$nameModal = qById("modal_header"); // Sélection de l'élément du DOM correspondant a la modal
     this._replaceWith(this.$nameModal, this.template.buildContactModal(params)); // Remplacement du contenu de la modal par le contenu généré par le template

@@ -10,7 +10,7 @@
             <p class="city">${city}</p>
             <p class="tagline">${tagline}</p>
         </div>
-        <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
+        <button class="contact_button">Contactez-moi</button>
         <div class="photographer-header__img">
             <img src="/assets/photographers/${portrait}" alt="${name}" />
         </div>
@@ -41,6 +41,26 @@
   `;
     };
 
+    this.pictureModalTemplate = () => `
+      <form method="dialog">
+        <button class="picture_close">
+          <img src="assets/icons/close_picture.svg" />
+        </button>
+      </form>
+      <div class="picture_modal_button">
+        <button id="left_arrow">
+          <img src="assets/icons/arrow.svg" />
+        </button>
+        <div class="picture_modal_content">
+          <img id="picture_modal_img" src="" />
+          <video id="picture_modal_video"></video>
+          <h2 id="picture_modal_title">Arc en ciel</h2>
+        </div>
+        <button id="right_arrow">
+          <img src="assets/icons/arrow.svg" />
+        </button>
+      </div>
+    `;
     // Définition du template pour la modal de contact
     this.contactModalTemplate = ({ name }) => `
         <h2>Contactez-moi</h2>
