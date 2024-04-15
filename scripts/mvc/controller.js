@@ -15,6 +15,7 @@
     this.getPhotographerName(); // Obtenir le nom du photographe
     this.showGalleryCards(); // Afficher les cartes de la galerie
     this.showNameContactModal(); // Afficher le nom dans la modal de contact
+    this.bindMediaCardsClick(); // Lier les événements de clic sur les cartes de la galerie
   };
 
   // Obtenir l'ID du photographe à partir de l'URL
@@ -63,11 +64,37 @@
       const galleryCards = photographerMedia.map((media) => {
         // Ajouter le nom du photographe à l'objet media
         media.photographerName = photographerName;
-        return self.view.template.buildGalleryCard(media);
+        // Créer une carte de la galerie avec l'ID du média comme attribut de données
+        return self.view.template.buildGalleryCard(media, media.id);
       });
 
       // Afficher les cartes de la galerie
       self.view.showGalleryCards(galleryCards);
+    });
+  };
+
+  // Lier les événements de clic sur les cartes de la galerie
+  Controller.prototype.bindMediaCardsClick = function () {
+    const self = this;
+    const galleryContainer = document.querySelector(".photographer-gallery");
+
+    galleryContainer.addEventListener("click", function (event) {
+      const card = event.target.closest(".card");
+      if (card) {
+        console.log("Card clicked:", card);
+        const mediaId = card.dataset.mediaId; // Supposons que chaque carte ait un attribut "data-media-id" qui contient l'ID du média correspondant
+        self.showMediaInModal(mediaId);
+      }
+    });
+  };
+
+  // Afficher le média dans une modale
+  Controller.prototype.showMediaInModal = function (mediaId) {
+    const self = this;
+    self.model.findMediaById(mediaId, function (media) {
+      // Supposons que la méthode findMediaById récupère les informations sur le média correspondant à partir de l'ID
+      // Ici, tu mettras à jour la modale avec l'image du média récupéré
+      self.view.updateModalWithMedia(media);
     });
   };
 

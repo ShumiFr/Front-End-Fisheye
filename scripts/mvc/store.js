@@ -57,6 +57,10 @@
     // Attend que les données soient chargées avant d'appeler la fonction de rappel
     this._dataPromise.then(() => {
       const entities = Memory[this._dbName].media; // Récupère les médias depuis la mémoire
+
+      // Ajoute un message de débogage pour afficher les données des médias
+      console.log("Médias récupérés depuis le store :", entities);
+
       // Appelle la fonction de rappel avec un tableau contenant tous les médias
       callback.call(
         this,

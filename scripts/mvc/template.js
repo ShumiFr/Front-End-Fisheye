@@ -17,7 +17,7 @@
     `;
 
     // Définition du template pour les cartes de la galerie
-    this.galleryCardTemplate = ({ title, likes, image, video, photographerName }) => {
+    this.galleryCardTemplate = ({ id, title, likes, image, video, photographerName }) => {
       let mediaElement = "";
       if (image) {
         mediaElement = `<img src="/assets/images/${photographerName}/${image}" alt="${title}" />`;
@@ -32,8 +32,9 @@
         mediaElement = `<p>Media not available</p>`;
       }
 
+      // Ajouter l'ID du média comme attribut de données à la carte de la galerie
       return `
-    <div class="card">
+    <div class="card" data-media-id="${id}">
       ${mediaElement}
       <h3>${title}</h3>
       <p>${likes} <i class='fa-solid fa-heart'></i></p>
@@ -61,6 +62,7 @@
         </button>
       </div>
     `;
+
     // Définition du template pour la modal de contact
     this.contactModalTemplate = ({ name }) => `
         <h2>Contactez-moi</h2>
