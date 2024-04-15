@@ -27,37 +27,34 @@
 
   View.prototype.updateModalWithMedia = function (media) {
     const modal = document.getElementById("media_modal");
-    console.log("Media to display in modal:", media);
 
     let mediaContent = ""; // Variable pour stocker le contenu de l'image ou de la vidéo
 
     if (media.image) {
-      mediaContent = `<img src="/assets/images/${media.photographerName}/${media.image}" alt="${media.title}" />`;
+      mediaContent = `<img id="media_modal_img" src="/assets/images/${media.photographerName}/${media.image}" alt="${media.title}" />`;
     } else if (media.video) {
       mediaContent = `
-            <video controls>
-                <source src="${media.url}" type="video/mp4">
+            <video id="media_modal_video" controls>
+                <source src="/assets/images/${media.photographerName}/${media.video}" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         `;
     }
 
-    console.log("Media content to display:", mediaContent);
-
     // Mettre à jour le contenu de la modale avec le template et les données du média
     modal.innerHTML = `
         <form method="dialog">
-            <button class="picture_close">
+            <button class="media_close">
                 <img src="assets/icons/close_picture.svg" />
             </button>
         </form>
-        <div class="picture_modal_button">
+        <div class="media_modal_button">
             <button id="left_arrow">
                 <img src="assets/icons/arrow.svg" />
             </button>
-            <div class="picture_modal_content">
+            <div class="media_modal_content">
                 ${mediaContent} <!-- Insérer l'image ou la vidéo ici -->
-                <h2 id="picture_modal_title">${media.title}</h2> <!-- Utiliser le titre du média -->
+                <h2 id="media_modal_title">${media.title}</h2> <!-- Utiliser le titre du média -->
             </div>
             <button id="right_arrow">
                 <img src="assets/icons/arrow.svg" />
@@ -65,7 +62,15 @@
         </div>
     `;
 
+    // Mettre à jour le style de la modale pour qu'elle soit affichée en flex
+    modal.style.display = "flex";
     modal.showModal(); // Afficher la modale après avoir mis à jour son contenu
+
+    // Ajouter un écouteur d'événements au bouton de fermeture
+    const closeButton = modal.querySelector(".media_close");
+    closeButton.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
   };
 
   // Méthode pour afficher nom dans la modal de contact

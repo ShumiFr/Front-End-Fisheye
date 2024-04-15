@@ -81,8 +81,7 @@
     galleryContainer.addEventListener("click", function (event) {
       const card = event.target.closest(".card");
       if (card) {
-        console.log("Card clicked:", card);
-        const mediaId = card.dataset.mediaId; // Supposons que chaque carte ait un attribut "data-media-id" qui contient l'ID du média correspondant
+        const mediaId = card.dataset.mediaId;
         self.showMediaInModal(mediaId);
       }
     });
@@ -92,8 +91,6 @@
   Controller.prototype.showMediaInModal = function (mediaId) {
     const self = this;
     self.model.findMediaById(mediaId, function (media) {
-      // Supposons que la méthode findMediaById récupère les informations sur le média correspondant à partir de l'ID
-      // Ici, tu mettras à jour la modale avec l'image du média récupéré
       self.view.updateModalWithMedia(media);
     });
   };

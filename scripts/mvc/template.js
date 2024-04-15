@@ -42,20 +42,20 @@
   `;
     };
 
-    this.pictureModalTemplate = () => `
+    this.mediaModalTemplate = () => `
       <form method="dialog">
-        <button class="picture_close">
+        <button class="media_close">
           <img src="assets/icons/close_picture.svg" />
         </button>
       </form>
-      <div class="picture_modal_button">
+      <div class="media_modal_button">
         <button id="left_arrow">
           <img src="assets/icons/arrow.svg" />
         </button>
-        <div class="picture_modal_content">
-          <img id="picture_modal_img" src="" />
-          <video id="picture_modal_video"></video>
-          <h2 id="picture_modal_title">Arc en ciel</h2>
+        <div class="media_modal_content">
+          <img id="media_modal_img" src="" />
+          <video id="media_modal_video"></video>
+          <h2 id="media_modal_title">Arc en ciel</h2>
         </div>
         <button id="right_arrow">
           <img src="assets/icons/arrow.svg" />
