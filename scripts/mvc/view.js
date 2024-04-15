@@ -18,7 +18,6 @@
     this._replaceWith(this.$gallery, galleryCards.join("")); // Remplacement du contenu de la galerie par le contenu généré par le template
 
     // Ajout de l'attribut data-media-id à chaque carte de la galerie
-    // Ajout de l'attribut data-media-id à chaque carte de la galerie
     const galleryCardElements = document.querySelectorAll(".photographer-gallery .card");
     galleryCardElements.forEach((card, index) => {
       const mediaId = card.getAttribute("data-media-id");
@@ -27,13 +26,14 @@
   };
 
   View.prototype.updateModalWithMedia = function (media) {
-    const modal = document.querySelector("#media_modal");
+    const modal = document.getElementById("media_modal");
+    console.log("Media to display in modal:", media);
 
     let mediaContent = ""; // Variable pour stocker le contenu de l'image ou de la vidéo
 
-    if (media.type === "image") {
-      mediaContent = `<img src="${media.url}" alt="${media.title}" />`;
-    } else if (media.type === "video") {
+    if (media.image) {
+      mediaContent = `<img src="/assets/images/${media.photographerName}/${media.image}" alt="${media.title}" />`;
+    } else if (media.video) {
       mediaContent = `
             <video controls>
                 <source src="${media.url}" type="video/mp4">
@@ -41,6 +41,8 @@
             </video>
         `;
     }
+
+    console.log("Media content to display:", mediaContent);
 
     // Mettre à jour le contenu de la modale avec le template et les données du média
     modal.innerHTML = `

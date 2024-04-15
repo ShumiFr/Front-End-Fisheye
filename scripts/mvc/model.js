@@ -19,7 +19,8 @@
   Model.prototype.findMediaById = function (mediaId, callback) {
     // Utiliser une logique appropriée pour trouver le média par son ID
     this.storage.findMedia(function (mediaData) {
-      const media = mediaData.find((media) => media.id === mediaId);
+      const media = mediaData.find((media) => String(media.id) === String(mediaId)); // Convertir les deux valeurs en chaînes de caractères pour comparer
+      console.log("Media found by ID:", media);
       callback(media);
     });
   };
