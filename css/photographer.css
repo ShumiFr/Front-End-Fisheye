@@ -142,7 +142,7 @@
   line-height: normal;
 }
 
-.like-price {
+.likes_price {
   display: flex;
   position: fixed;
   background-color: #db8876;
@@ -152,14 +152,14 @@
   border-radius: 5px 5px 0 0;
 }
 
-.like-price p {
+.likes_price p {
   font-size: 24px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
 }
 
-.like-price p:first-child {
+.likes_price p:first-child {
   margin-right: 80px;
 }
 

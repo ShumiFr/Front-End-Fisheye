@@ -51,6 +51,7 @@
     });
   };
 
+  // Méthode pour récupérer tous les médias
   Store.prototype.findMedia = function (callback) {
     callback = callback || function () {}; // Fonction de rappel par défaut
 

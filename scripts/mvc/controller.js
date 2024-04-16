@@ -16,6 +16,7 @@
     this.showGalleryCards(); // Afficher les cartes de la galerie
     this.showNameContactModal(); // Afficher le nom dans la modal de contact
     this.bindMediaCardsClick(); // Lier les événements de clic sur les cartes de la galerie
+    this.showLikesPrice(); // Afficher les likes et le prix
   };
 
   // Obtenir l'ID du photographe à partir de l'URL
@@ -84,6 +85,18 @@
         const mediaId = card.dataset.mediaId;
         self.showMediaInModal(mediaId);
       }
+    });
+  };
+
+  // Afficher les likes et le prix
+  Controller.prototype.showLikesPrice = function () {
+    const self = this;
+    self.model.findPhotographers(function (data) {
+      // Trouver les données du photographe correspondant à l'ID
+      const photographerData = data.find((photographer) => photographer.id === self.photographerId);
+
+      // Afficher les likes et le prix en utilisant les données du photographe
+      self.view.showLikesPrice(photographerData);
     });
   };
 

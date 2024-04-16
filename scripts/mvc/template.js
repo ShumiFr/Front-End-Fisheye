@@ -10,7 +10,7 @@
             <p class="city">${city}</p>
             <p class="tagline">${tagline}</p>
         </div>
-        <button class="contact_button">Contactez-moi</button>
+        <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
         <div class="photographer-header__img">
             <img src="/assets/photographers/${portrait}" alt="${name}" />
         </div>
@@ -42,25 +42,9 @@
   `;
     };
 
-    this.mediaModalTemplate = () => `
-      <form method="dialog">
-        <button class="media_close">
-          <img src="assets/icons/close_picture.svg" />
-        </button>
-      </form>
-      <div class="media_modal_button">
-        <button id="left_arrow">
-          <img src="assets/icons/arrow.svg" />
-        </button>
-        <div class="media_modal_content">
-          <img id="media_modal_img" src="" />
-          <video id="media_modal_video"></video>
-          <h2 id="media_modal_title">Arc en ciel</h2>
-        </div>
-        <button id="right_arrow">
-          <img src="assets/icons/arrow.svg" />
-        </button>
-      </div>
+    this.likesPriceTemplate = ({ likes, price }) => `
+      <p class="likes">${likes} <i class='fa-solid fa-heart'></i></p>
+      <p class="price">${price}€ / jour</p>
     `;
 
     // Définition du template pour la modal de contact
@@ -78,6 +62,11 @@
   // Ajout de la méthode buildGalleryCard au prototype de Template
   Template.prototype.buildGalleryCard = function (data) {
     return this.galleryCardTemplate(data); // Génération du contenu de la carte de la galerie en utilisant le template
+  };
+
+  // Ajout de la méthode buildLikesPrice au prototype de Template
+  Template.prototype.buildLikesPrice = function (data) {
+    return this.likesPriceTemplate(data);
   };
 
   // Ajout de la méthode buildContactModal au prototype de Template
