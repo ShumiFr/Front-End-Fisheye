@@ -13,8 +13,8 @@
     return (scope || document).querySelectorAll(selector);
   };
 
-  window.$on = function (target, type, callback, useCapture) {
-    target.addEventListener(type, callback, !!useCapture);
+  window.$on = function (target, type, callback) {
+    target.addEventListener(type, callback);
   };
 
   window.$delegate = function (target, selector, type, handler) {
@@ -26,10 +26,7 @@
       if (hasMatch) handler.call(targetElement, event);
     }
 
-    // https://developer.mozilla.org/en-US/docs/Web/Events/blur
-    var useCapture = type === "blur" || type === "focus";
-
-    window.$on(target, type, dispatchEvent, useCapture);
+    window.$on(target, type, dispatchEvent);
   };
 
   NodeList.prototype.forEach = Array.prototype.forEach;

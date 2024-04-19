@@ -6,22 +6,35 @@
     this.storage = storage; // Stockage des données
   }
 
-  // Méthode pour lire les données du modèle
+  // Méthode pour truver tous les photographes
   Model.prototype.findPhotographers = function (query) {
     return this.storage.findPhotographers(query);
   };
 
-  // Dans votre modèle
+  // Méthode pour trouver tous les médias
   Model.prototype.findMedia = function (query) {
     return this.storage.findMedia(query);
   };
 
+  // Méthode pour trouver les média via leur ID
   Model.prototype.findMediaById = function (mediaId, callback) {
     // Utiliser une logique appropriée pour trouver le média par son ID
     this.storage.findMedia(function (mediaData) {
       const media = mediaData.find((media) => String(media.id) === String(mediaId)); // Convertir les deux valeurs en chaînes de caractères pour comparer
-      console.log("Media found by ID:", media);
       callback(media);
+    });
+  };
+
+  // Méthode pour ajouter un like à une photo
+  Model.prototype.addLike = function (photoId, callback) {
+    const self = this;
+    this.storage.findMediaById(photoId, function (item) {
+      if (item) {
+        self.storage.save(photoId, { ...item, likes: item.likes + 1 }, callback);
+      } else {
+        // Gérer le cas où l'élément n'est pas trouvé
+        console.error("L'élément avec l'ID spécifié n'a pas été trouvé.");
+      }
     });
   };
 

@@ -131,7 +131,7 @@
   width: 75%;
 }
 
-.card p {
+.card a {
   position: absolute;
   right: 5px;
   bottom: 10px;
@@ -142,7 +142,7 @@
   line-height: normal;
 }
 
-.likes_price {
+.likes-price {
   display: flex;
   position: fixed;
   background-color: #db8876;
@@ -152,14 +152,14 @@
   border-radius: 5px 5px 0 0;
 }
 
-.likes_price p {
+.likes-price p {
   font-size: 24px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
 }
 
-.likes_price p:first-child {
+.likes-price p:first-child {
   margin-right: 80px;
 }
 

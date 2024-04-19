@@ -4,7 +4,35 @@
   // Définition de la fonction constructeur View
   function View(template) {
     this.template = template;
+
+    this.$cardsList = qs(".photographer-gallery"); // Sélection de l'élément du DOM correspondant à la liste des cartes
   }
+
+  // Méthode pour lier un événement à un gestionnaire d'événements
+  View.prototype.bind = function (event, handler) {
+    const self = this;
+    if (event === "photoLiked") {
+      $delegate(self.$cardsList, ".card__btn", "click", function (event) {
+        event.preventDefault();
+        console.log("Like button clicked");
+
+        const id = parseInt(event.target.getAttribute("data-like-id"));
+        handler(id);
+      });
+    }
+  };
+
+  // Méthode pour render
+  View.prototype.render = function (viewCmd, params) {
+    const self = this;
+    const viewCmdList = {
+      updateLikes: function () {
+        self._replaceWith(qs(`.photo-like-${params.id}`), self.template.buildLikeButton(params));
+      },
+    };
+
+    viewCmdList[viewCmd].call();
+  };
 
   // Méthode pour afficher l'en-tête
   View.prototype.showHeader = function (params) {
@@ -27,7 +55,7 @@
 
   // Méthode pour afficher les likes et le prix
   View.prototype.showLikesPrice = function (params) {
-    this.$likesPrice = qs(".likes_price"); // Sélection de l'élément du DOM correspondant aux likes et au prix
+    this.$likesPrice = qs(".likes-price"); // Sélection de l'élément du DOM correspondant aux likes et au prix
     this._replaceWith(this.$likesPrice, this.template.buildLikesPrice(params)); // Remplacement du contenu des likes et du prix par le contenu généré par le template
   };
 

@@ -20,6 +20,8 @@
             photographers: data.photographers,
             media: data.media,
           };
+
+          console.log("Data loaded from JSON file:", Memory[name]);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -59,9 +61,6 @@
     this._dataPromise.then(() => {
       const entities = Memory[this._dbName].media; // Récupère les médias depuis la mémoire
 
-      // Ajoute un message de débogage pour afficher les données des médias
-      console.log("Médias récupérés depuis le store :", entities);
-
       // Appelle la fonction de rappel avec un tableau contenant tous les médias
       callback.call(
         this,
@@ -70,10 +69,19 @@
     });
   };
 
-  // Méthode pour récupérer un élément par son ID
-  Store.prototype.findById = function (id, callback) {
+  Store.prototype.findMediaById = function (id, callback) {
     callback = callback || function () {}; // Fonction de rappel par défaut
-    callback.call(this, Memory[this._dbName].photographers[id]); // Appelle la fonction de rappel avec le photographe correspondant à l'ID
+
+    // Récupère le tableau de médias
+    const media = Memory[this._dbName].media;
+    console.log("media", media);
+
+    // Recherche l'objet avec l'ID spécifié dans le tableau de médias
+    const foundMedia = media.find((mediaItem) => mediaItem.id === id);
+    console.log("foundMedia", foundMedia);
+
+    // Appelle la fonction de rappel avec l'objet trouvé
+    callback.call(this, foundMedia);
   };
 
   // Méthode pour sauvegarder un élément

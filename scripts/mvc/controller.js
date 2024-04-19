@@ -6,6 +6,10 @@
     const self = this; // Assigner la valeur de "this" à "self" pour pouvoir l'utiliser dans les fonctions de rappel
     self.model = model; // Assigner le modèle au contrôleur
     self.view = view; // Assigner la vue au contrôleur
+
+    self.view.bind("photoLiked", function (photoId) {
+      self.updateLike(photoId);
+    });
   }
 
   // Initialiser le contrôleur
@@ -80,9 +84,16 @@
     const galleryContainer = document.querySelector(".photographer-gallery");
 
     galleryContainer.addEventListener("click", function (event) {
-      const card = event.target.closest(".card");
-      if (card) {
+      // Récupérer l'élément parent de l'image ou de la vidéo qui a été cliqué
+      const mediaElement = event.target.closest(".card img, .card video");
+
+      // Vérifier si l'élément cliqué est une image ou une vidéo
+      if (mediaElement) {
+        // Récupérer l'ID du média à partir de l'élément parent de l'image ou de la vidéo
+        const card = mediaElement.closest(".card");
         const mediaId = card.dataset.mediaId;
+
+        // Afficher le média dans la modal
         self.showMediaInModal(mediaId);
       }
     });
@@ -97,6 +108,14 @@
 
       // Afficher les likes et le prix en utilisant les données du photographe
       self.view.showLikesPrice(photographerData);
+    });
+  };
+
+  // Mettre à jour les likes
+  Controller.prototype.updateLike = function (photoId) {
+    const self = this;
+    self.model.addLike(photoId, function ({ id, likes }) {
+      self.view.render("updateLikes", { id, likes });
     });
   };
 
