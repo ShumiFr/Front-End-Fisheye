@@ -61,6 +61,21 @@
     return this.galleryCardTemplate(data); // Je génère le contenu de la carte de la galerie en utilisant le template.
   };
 
+  // J'ajoute la méthode buildLikesPrice au prototype de Template.
+  Template.prototype.buildLikesPrice = function (data) {
+    return `
+      <p class="likes">${data.totalLikes} <i class='fa-solid fa-heart'></i></p>
+      <p class="price">${data.photographerPrice}€ / jour</p>
+    `;
+  };
+
+  // J'ajoute la méthode buildLikeButton au prototype de Template.
+  Template.prototype.buildLikeButton = function ({ id, likes }) {
+    return `
+    <a class="card__btn" href="#" data-like-id="${id}">${likes} <i class='fa-solid fa-heart'></i></a>
+    `;
+  };
+
   // J'ajoute la méthode buildContactModal au prototype de Template.
   Template.prototype.buildContactModal = function (data) {
     return this.contactModalTemplate(data); // Je génère le contenu de la modal en utilisant le template.
