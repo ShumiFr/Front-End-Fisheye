@@ -107,6 +107,7 @@
       // Appeler la méthode du modèle pour obtenir le prix du photographe
       self.model.getPhotographerPrice(function (photographerPrice) {
         // Afficher les likes et le prix en utilisant les données récupérées
+        console.log(photographerPrice);
         self.view.showLikesPrice({ totalLikes, photographerPrice });
       });
     });

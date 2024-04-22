@@ -74,7 +74,7 @@
   Template.prototype.buildLikesPrice = function (data) {
     return `
       <p class="likes">${data.totalLikes} <i class='fa-solid fa-heart'></i></p>
-      <p class="price">${data.price}€ / jour</p>
+      <p class="price">${data.photographerPrice}€ / jour</p>
     `;
   };
 
