@@ -102,12 +102,13 @@
   // Afficher les likes et le prix
   Controller.prototype.showLikesPrice = function () {
     const self = this;
-    self.model.findPhotographers(function (data) {
-      // Trouver les données du photographe correspondant à l'ID
-      const photographerData = data.find((photographer) => photographer.id === self.photographerId);
-
-      // Afficher les likes et le prix en utilisant les données du photographe
-      self.view.showLikesPrice(photographerData);
+    // Appeler la méthode du modèle pour obtenir le total des likes
+    self.model.getTotalLikes(function (totalLikes) {
+      // Appeler la méthode du modèle pour obtenir le prix du photographe
+      self.model.getPhotographerPrice(function (photographerPrice) {
+        // Afficher les likes et le prix en utilisant les données récupérées
+        self.view.showLikesPrice({ totalLikes, photographerPrice });
+      });
     });
   };
 
@@ -116,6 +117,20 @@
     const self = this;
     self.model.addLike(photoId, function ({ id, likes }) {
       self.view.render("updateLikes", { id, likes });
+    });
+  };
+
+  // Mettre à jour les likes et le prix de l'encadré
+  Controller.prototype.updateLikesPrice = function () {
+    const self = this;
+
+    // Appeler la méthode du modèle pour obtenir le total des likes
+    this.model.getTotalLikes(function (totalLikes) {
+      const photographerPrice = self.storage.getPhotographerPrice();
+
+      const html = self.template.buildLikesPrice({ totalLikes, price: photographerPrice });
+
+      self.view.updateLikesPrice(html);
     });
   };
 

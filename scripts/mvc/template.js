@@ -44,11 +44,6 @@
       `;
     };
 
-    this.likesPriceTemplate = ({ likes, price }) => `
-      <p class="likes">${likes} <i class='fa-solid fa-heart'></i></p>
-      <p class="price">${price}€ / jour</p>
-    `;
-
     // Définition du template pour la modal de contact
     this.contactModalTemplate = ({ name }) => `
         <h2>Contactez-moi</h2>
@@ -74,6 +69,13 @@
   // Ajout de la méthode buildContactModal au prototype de Template
   Template.prototype.buildContactModal = function (data) {
     return this.contactModalTemplate(data); // Génération du contenu de la modal en utilisant le template
+  };
+
+  Template.prototype.buildLikesPrice = function (data) {
+    return `
+      <p class="likes">${data.totalLikes} <i class='fa-solid fa-heart'></i></p>
+      <p class="price">${data.price}€ / jour</p>
+    `;
   };
 
   Template.prototype.buildLikeButton = function ({ id, likes }) {

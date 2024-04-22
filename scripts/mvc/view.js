@@ -53,6 +53,15 @@
     });
   };
 
+  // Méthode pour mettre a jour le prix pour l'encadré
+  View.prototype.updateLikesPrice = function (html) {
+    // Insérer le HTML généré dans l'élément approprié de votre interface utilisateur
+    const likesPriceElement = document.querySelector(".likes-price");
+    if (likesPriceElement) {
+      likesPriceElement.innerHTML = html;
+    }
+  };
+
   // Méthode pour afficher les likes et le prix
   View.prototype.showLikesPrice = function (params) {
     this.$likesPrice = qs(".likes-price"); // Sélection de l'élément du DOM correspondant aux likes et au prix

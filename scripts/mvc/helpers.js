@@ -19,14 +19,14 @@
 
   window.$delegate = function (target, selector, type, handler) {
     function dispatchEvent(event) {
-      var targetElement = event.target;
-      var potentialElements = window.qsa(selector, target);
-      var hasMatch = Array.prototype.indexOf.call(potentialElements, targetElement) >= 0;
+      var targetElement = event.target; // Récupère l'élément cible de l'événement
+      var potentialElements = window.qsa(selector, target); // Récupère les éléments correspondant au sélecteur
+      var hasMatch = Array.prototype.indexOf.call(potentialElements, targetElement) >= 0; // Vérifie si l'élément cible correspond au sélecteur
 
-      if (hasMatch) handler.call(targetElement, event);
+      if (hasMatch) handler.call(targetElement, event); // Appelle le gestionnaire d'événements si l'élément cible correspond au sélecteur
     }
 
-    window.$on(target, type, dispatchEvent);
+    window.$on(target, type, dispatchEvent); // Ajoute un écouteur d'événements à l'élément cible
   };
 
   NodeList.prototype.forEach = Array.prototype.forEach;
