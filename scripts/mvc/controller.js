@@ -102,12 +102,11 @@
   // Afficher les likes et le prix
   Controller.prototype.showLikesPrice = function () {
     const self = this;
-    // Appeler la méthode du modèle pour obtenir le total des likes
-    self.model.getTotalLikes(function (totalLikes) {
-      // Appeler la méthode du modèle pour obtenir le prix du photographe
-      self.model.getPhotographerPrice(function (photographerPrice) {
+    // Obtenez d'abord le total des likes des médias du photographe actuellement sélectionné
+    self.model.getTotalLikes(self.photographerId, function (totalLikes) {
+      // Ensuite, obtenez le prix du photographe actuellement sélectionné
+      self.model.getPhotographerPrice(self.photographerId, function (photographerPrice) {
         // Afficher les likes et le prix en utilisant les données récupérées
-        console.log(photographerPrice);
         self.view.showLikesPrice({ totalLikes, photographerPrice });
       });
     });
@@ -117,7 +116,11 @@
   Controller.prototype.updateLike = function (photoId) {
     const self = this;
     self.model.addLike(photoId, function ({ id, likes }) {
-      self.view.render("updateLikes", { id, likes });
+      // Après avoir ajouté un like, mettez à jour le total des likes
+      self.model.getTotalLikes(self.photographerId, function (totalLikes) {
+        // Mettre à jour la vue avec le nouveau total des likes
+        self.view.render("updateLikes", { id, likes, totalLikes });
+      });
     });
   };
 

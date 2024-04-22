@@ -11,9 +11,12 @@
     return this.storage.findPhotographers(query);
   };
 
-  Model.prototype.getPhotographerPrice = function (callback) {
+  Model.prototype.getPhotographerPrice = function (photographerId, callback) {
     this.storage.findPhotographers(function (photographerData) {
-      const photographerPrice = photographerData[0].price;
+      const photographer = photographerData.find(
+        (photographer) => photographer.id === photographerId
+      );
+      const photographerPrice = photographer ? photographer.price : 0; // Gestion du cas où aucun photographe n'est trouvé
       callback(photographerPrice);
     });
   };
@@ -45,12 +48,15 @@
     });
   };
 
-  Model.prototype.getTotalLikes = function (callback) {
-    // Appeler la méthode pour récupérer tous les médias
+  Model.prototype.getTotalLikes = function (photographerId, callback) {
     this.storage.findMedia(function (mediaData) {
+      // Filtrer les médias qui appartiennent au photographe avec l'ID correspondant
+      const photographerMedia = mediaData.filter(
+        (media) => media.photographerId === photographerId
+      );
       // Calculer le total des likes
-      const totalLikes = mediaData.reduce((total, media) => total + media.likes, 0);
-
+      const totalLikes = photographerMedia.reduce((total, media) => total + media.likes, 0);
+      // Appeler le callback avec le total des likes calculé
       callback(totalLikes);
     });
   };

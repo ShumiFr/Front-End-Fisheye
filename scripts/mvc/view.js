@@ -64,8 +64,8 @@
 
   // Méthode pour afficher les likes et le prix
   View.prototype.showLikesPrice = function (params) {
-    this.$likesPrice = qs(".likes-price"); // Sélection de l'élément du DOM correspondant aux likes et au prix
-    this._replaceWith(this.$likesPrice, this.template.buildLikesPrice(params)); // Remplacement du contenu des likes et du prix par le contenu généré par le template
+    this.$likesPrice = qs(".likes-price");
+    this._replaceWith(this.$likesPrice, this.template.buildLikesPrice(params));
   };
 
   // Méthode pour mettre à jour la modale avec le média
