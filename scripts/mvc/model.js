@@ -1,81 +1,83 @@
 (function (window) {
   "use strict";
 
-  // Définition du constructeur du modèle
+  // Je définis le constructeur du modèle.
   function Model(storage, view) {
-    this.storage = storage; // Stockage des données
-    this.view = view;
+    this.storage = storage; // Je stocke les références au storage,
+    this.view = view; // et à la vue.
   }
 
-  // Méthode pour truver tous les photographes
+  // Méthode pour trouver tous les photographes.
   Model.prototype.findPhotographers = function (query) {
     return this.storage.findPhotographers(query);
   };
 
+  // Méthode pour obtenir le prix d'un photographe.
   Model.prototype.getPhotographerPrice = function (photographerId, callback) {
+    // Je trouve le photographe correspondant à l'ID.
     this.storage.findPhotographers(function (photographerData) {
       const photographer = photographerData.find(
         (photographer) => photographer.id === photographerId
       );
-      const photographerPrice = photographer ? photographer.price : 0; // Gestion du cas où aucun photographe n'est trouvé
+      // Je récupère le prix du photographe ou 0 s'il n'est pas trouvé.
+      const photographerPrice = photographer ? photographer.price : 0;
+      // J'appelle le callback avec le prix trouvé.
       callback(photographerPrice);
     });
   };
 
-  // Méthode pour trouver tous les médias
+  // Méthode pour trouver tous les médias.
   Model.prototype.findMedia = function (query) {
     return this.storage.findMedia(query);
   };
 
-  // Méthode pour trouver les média via leur ID
+  // Méthode pour trouver un média par son ID.
   Model.prototype.findMediaById = function (mediaId, callback) {
-    const self = this; // Capturer la référence à this
-    // Utiliser une logique appropriée pour trouver le média par son ID
+    // Je trouve le média correspondant à l'ID.
     this.storage.findMedia(function (mediaData) {
-      const media = mediaData.find((media) => String(media.id) === String(mediaId)); // Convertir les deux valeurs en chaînes de caractères pour comparer
+      const media = mediaData.find((media) => String(media.id) === String(mediaId));
+      // J'appelle le callback avec le média trouvé.
       callback(media);
     });
   };
 
-  // Méthode pour basculer le like d'un média
+  // Méthode pour mettre a jour le like d'un média.
   Model.prototype.toggleLike = function (mediaId, callback) {
-    const self = this;
-    // Utilisez la méthode findMediaById pour obtenir le média par son ID
+    self = this;
+    // J'utilise la méthode findMediaById pour obtenir le média par son ID.
     this.findMediaById(mediaId, function (media) {
       if (media) {
-        media.liked = !media.liked; // Inverse l'état de like
-
-        // Mettre à jour le nombre de likes
+        media.liked = !media.liked; // Je change l'état du like.
+        // Je mets à jour le nombre de likes.
         if (media.liked) {
-          media.likes++; // Incrémenter le nombre de likes si le média est liké
+          media.likes++; // J'incrémente le nombre de likes si le média est liké.
         } else {
-          media.likes--; // Décrémenter le nombre de likes si le média est unliké
+          media.likes--; // Je décrémente le nombre de likes si le média est unliké.
         }
-
-        // Mettre à jour le média dans le stockage
+        // Je mets à jour le média dans le stockage.
         self.storage.save(mediaId, media, function (updatedMedia) {
-          callback(updatedMedia.id, updatedMedia.likes, updatedMedia.liked); // Appeler le rappel avec les nouvelles données du média
+          // J'appelle le callback avec les nouvelles données du média.
+          callback(updatedMedia.id, updatedMedia.likes, updatedMedia.liked);
         });
       }
     });
   };
 
+  // Méthode pour obtenir le nombre total de likes pour un photographe.
   Model.prototype.getTotalLikes = function (photographerId, callback) {
+    // Je trouve tous les médias.
     this.storage.findMedia(function (mediaData) {
-      // Filtrer les médias qui appartiennent au photographe avec l'ID correspondant
+      // Je filtre les médias appartenant au photographe correspondant à l'ID.
       const photographerMedia = mediaData.filter(
         (media) => media.photographerId === photographerId
       );
-      // Calculer le total des likes
+      // Je calcule le total des likes.
       const totalLikes = photographerMedia.reduce((total, media) => total + media.likes, 0);
-      // Appeler le callback avec le total des likes calculé
+      // J'appelle le callback avec le total des likes calculé.
       callback(totalLikes);
     });
   };
 
-  // Définition de l'objet global "app" s'il n'existe pas déjà
-  window.app = window.app || {};
-
-  // Assignation du constructeur du modèle à l'objet global "app"
-  window.app.Model = Model;
+  window.app = window.app || {}; // Je définis l'objet global "app" s'il n'existe pas déjà.
+  window.app.Model = Model; // J'assigne le constructeur du modèle à l'objet global "app".
 })(window);

@@ -1,22 +1,29 @@
 (function (window) {
   "use strict";
 
+  // Définition des fonctions helpers
+
+  // Fonction pour sélectionner un élément par son ID
   window.qById = function (selector, scope) {
     return (scope || document).getElementById(selector);
   };
 
+  // Fonction pour sélectionner le premier élément correspondant au sélecteur CSS
   window.qs = function (selector, scope) {
     return (scope || document).querySelector(selector);
   };
 
+  // Fonction pour sélectionner tous les éléments correspondant au sélecteur CSS
   window.qsa = function (selector, scope) {
     return (scope || document).querySelectorAll(selector);
   };
 
+  // Fonction pour ajouter un écouteur d'événements à un élément
   window.$on = function (target, type, callback) {
     target.addEventListener(type, callback);
   };
 
+  // Fonction pour déléguer un événement à un sélecteur CSS spécifique sur un élément parent
   window.$delegate = function (target, selector, type, handler) {
     function dispatchEvent(event) {
       var targetElement = event.target; // Récupère l'élément cible de l'événement
@@ -29,8 +36,11 @@
     window.$on(target, type, dispatchEvent); // Ajoute un écouteur d'événements à l'élément cible
   };
 
+  // Méthode forEach pour les NodeList
   NodeList.prototype.forEach = Array.prototype.forEach;
+
+  // Méthode pour supprimer un élément d'un tableau
   Array.prototype.remove = function (element) {
-    // TODO: To be implemented.
+    // À implémenter
   };
 })(window);
