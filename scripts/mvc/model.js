@@ -2,8 +2,9 @@
   "use strict";
 
   // Définition du constructeur du modèle
-  function Model(storage) {
+  function Model(storage, view) {
     this.storage = storage; // Stockage des données
+    this.view = view;
   }
 
   // Méthode pour truver tous les photographes
@@ -28,6 +29,7 @@
 
   // Méthode pour trouver les média via leur ID
   Model.prototype.findMediaById = function (mediaId, callback) {
+    const self = this; // Capturer la référence à this
     // Utiliser une logique appropriée pour trouver le média par son ID
     this.storage.findMedia(function (mediaData) {
       const media = mediaData.find((media) => String(media.id) === String(mediaId)); // Convertir les deux valeurs en chaînes de caractères pour comparer
@@ -35,15 +37,25 @@
     });
   };
 
-  // Méthode pour ajouter un like à une photo
-  Model.prototype.addLike = function (photoId, callback) {
+  // Méthode pour basculer le like d'un média
+  Model.prototype.toggleLike = function (mediaId, callback) {
     const self = this;
-    this.storage.findMediaById(photoId, function (item) {
-      if (item) {
-        self.storage.save(photoId, { ...item, likes: item.likes + 1 }, callback);
-      } else {
-        // Gérer le cas où l'élément n'est pas trouvé
-        console.error("L'élément avec l'ID spécifié n'a pas été trouvé.");
+    // Utilisez la méthode findMediaById pour obtenir le média par son ID
+    this.findMediaById(mediaId, function (media) {
+      if (media) {
+        media.liked = !media.liked; // Inverse l'état de like
+
+        // Mettre à jour le nombre de likes
+        if (media.liked) {
+          media.likes++; // Incrémenter le nombre de likes si le média est liké
+        } else {
+          media.likes--; // Décrémenter le nombre de likes si le média est unliké
+        }
+
+        // Mettre à jour le média dans le stockage
+        self.storage.save(mediaId, media, function (updatedMedia) {
+          callback(updatedMedia.id, updatedMedia.likes, updatedMedia.liked); // Appeler le rappel avec les nouvelles données du média
+        });
       }
     });
   };

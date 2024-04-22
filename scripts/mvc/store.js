@@ -15,12 +15,11 @@
       this._dataPromise = fetch("../../data/photographers.json")
         .then((response) => response.json())
         .then((data) => {
-          // Stocke les données en mémoire pour une utilisation ultérieure
+          // Stockons les données en mémoire avec la propriété `liked` initialisée à `false` pour chaque média
           Memory[name] = {
             photographers: data.photographers,
-            media: data.media,
+            media: data.media.map((mediaItem) => ({ ...mediaItem, liked: false })),
           };
-
           console.log("Data loaded from JSON file:", Memory[name]);
         })
         .catch((error) => {

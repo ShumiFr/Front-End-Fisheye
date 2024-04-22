@@ -8,7 +8,7 @@
     self.view = view; // Assigner la vue au contrôleur
 
     self.view.bind("photoLiked", function (photoId) {
-      self.updateLike(photoId);
+      self.toggleLike(photoId);
     });
   }
 
@@ -112,15 +112,15 @@
     });
   };
 
-  // Mettre à jour les likes
-  Controller.prototype.updateLike = function (photoId) {
+  Controller.prototype.handleLikeButtonClicked = function (mediaId) {
+    this.model.toggleLike(mediaId); // Appelle la méthode toggleLike du modèle
+  };
+
+  Controller.prototype.toggleLike = function (mediaId) {
     const self = this;
-    self.model.addLike(photoId, function ({ id, likes }) {
-      // Après avoir ajouté un like, mettez à jour le total des likes
-      self.model.getTotalLikes(self.photographerId, function (totalLikes) {
-        // Mettre à jour la vue avec le nouveau total des likes
-        self.view.render("updateLikes", { id, likes, totalLikes });
-      });
+    self.model.toggleLike(mediaId, function (mediaId, likes, liked) {
+      // Appel de la fonction de rappel pour mettre à jour la vue
+      self.view.updateLike(mediaId, likes, liked);
     });
   };
 

@@ -53,6 +53,15 @@
     });
   };
 
+  View.prototype.updateLike = function (mediaId, likes, liked) {
+    const likeButton = qs(`[data-like-id="${mediaId}"]`, this.$cardsList);
+    if (likeButton) {
+      likeButton.innerHTML = `${likes} ${
+        liked ? '<i class="fa-solid fa-heart"></i>' : '<i class="far fa-heart"></i>'
+      }`;
+    }
+  };
+
   // Méthode pour mettre a jour le prix pour l'encadré
   View.prototype.updateLikesPrice = function (html) {
     // Insérer le HTML généré dans l'élément approprié de votre interface utilisateur

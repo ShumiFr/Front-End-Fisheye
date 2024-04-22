@@ -17,31 +17,31 @@
     `;
 
     // Définition du template pour les cartes de la galerie
-    this.galleryCardTemplate = ({ id, title, likes, image, video, photographerName }) => {
+    this.galleryCardTemplate = ({ id, title, likes, image, video, photographerName, liked }) => {
       let mediaElement = "";
       if (image) {
         mediaElement = `<img src="/assets/images/${photographerName}/${image}" alt="${title}" />`;
       } else if (video) {
         mediaElement = `
-          <div class="video-container">
-            <video src="/assets/images/${photographerName}/${video}" alt="${title}"></video>
-          </div>
-        `;
+            <div class="video-container">
+              <video src="/assets/images/${photographerName}/${video}" alt="${title}"></video>
+            </div>
+          `;
       } else {
-        // Afficher un message d'erreur ou une image par défaut si ni image ni vidéo n'est défini
         mediaElement = `<p>Media not available</p>`;
       }
 
-      // Ajouter l'ID du média comme attribut de données à la carte de la galerie
       return `
-        <div class="card" data-media-id="${id}">
-          ${mediaElement}
-          <h3>${title}</h3>
-          <div class="photo-like-${id}">
-            <a class="card__btn" href="#" data-like-id="${id}">${likes} <i class='fa-solid fa-heart'></i></a>
+          <div class="card" data-media-id="${id}">
+            ${mediaElement}
+            <h3>${title}</h3>
+            <div class="photo-like-${id}">
+              <a class="card__btn" href="#" data-like-id="${id}">${likes} ${
+        liked ? '<i class="fa-solid fa-heart"></i>' : '<i class="far fa-heart"></i>'
+      }</a>
+            </div>
           </div>
-        </div>
-      `;
+        `;
     };
 
     // Définition du template pour la modal de contact
