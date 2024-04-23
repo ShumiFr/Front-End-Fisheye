@@ -2,10 +2,12 @@
   "use strict";
 
   // Je définis la fonction constructeur View.
-  function View(template) {
+  function View(template, view) {
     this.template = template;
+    this.view = view;
 
     this.$cardsList = qs(".photographer-gallery"); // Je sélectionne l'élément du DOM correspondant à la liste des cartes.
+    this.$modal = document.getElementById("media_modal"); // Je sélectionne l'élément du DOM correspondant à la modale.
   }
 
   // Méthode pour lier un événement à un gestionnaire d'événements.
@@ -20,6 +22,35 @@
         handler(id);
       });
     }
+  };
+
+  // Méthode pour lier les événements de clic sur les flèches de la modale.
+  View.prototype.bindMediaModalArrows = function () {
+    const self = this;
+
+    // Ajouter un gestionnaire d'événements pour le clic sur la modale.
+    self.$modal.addEventListener("click", function (event) {
+      // Vérifier si la cible du clic est l'image de la flèche de droite.
+      if (event.target && event.target.closest("#right_arrow img")) {
+        event.preventDefault();
+        self.showNextMedia();
+      }
+
+      // Vérifier si la cible du clic est l'image de la flèche de gauche.
+      if (event.target && event.target.closest("#left_arrow img")) {
+        event.preventDefault();
+        self.showPreviousMedia();
+      }
+    });
+  };
+
+  // Méthode pour afficher le média suivant.
+  View.prototype.showNextMedia = function () {
+    console.log("Next Media");
+  };
+
+  View.prototype.showPreviousMedia = function () {
+    console.log("Previous Media");
   };
 
   // Méthode pour render.
@@ -53,6 +84,7 @@
     });
   };
 
+  // Méthode pour mettre à jour le bouton de like.
   View.prototype.updateLike = function (mediaId, likes, liked) {
     const likeButton = qs(`[data-like-id="${mediaId}"]`, this.$cardsList);
     if (likeButton) {
@@ -62,6 +94,7 @@
     }
   };
 
+  // Méthode pour mettre à jour les likes et le prix.
   View.prototype.updateLikesPrice = function (data) {
     const likesPriceHtml = this.template.buildLikesPrice(data);
     const likesPriceElement = document.querySelector(".likes-price");
@@ -117,6 +150,9 @@
     // Je mets à jour le style de la modale pour qu'elle soit affichée en flex.
     modal.style.display = "flex";
     modal.showModal(); // J'affiche la modale après avoir mis à jour son contenu.
+
+    // Appel de la méthode pour lier les événements de clic sur les flèches de la modale.
+    this.bindMediaModalArrows();
 
     // J'ajoute un écouteur d'événements au bouton de fermeture.
     const closeButton = modal.querySelector(".media_close");
