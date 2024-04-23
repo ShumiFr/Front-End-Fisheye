@@ -113,29 +113,33 @@
     });
   };
 
+  // J'ajoute la méthode toggleLike au prototype de Controller.
   Controller.prototype.handleLikeButtonClicked = function (mediaId) {
     this.model.toggleLike(mediaId); // J'appelle la méthode toggleLike du modèle.
   };
 
+  // J'affiche les likes et le prix de l'encadré.
   Controller.prototype.toggleLike = function (mediaId) {
     const self = this;
     self.model.toggleLike(mediaId, function (mediaId, likes, liked) {
-      // J'appelle la fonction de rappel pour mettre à jour la vue.
+      // J'affiche le nombre de likes et le bouton de like mis à jour.
       self.view.updateLike(mediaId, likes, liked);
+      // J'appelle la méthode updateLikesPrice pour mettre à jour le total des likes.
+      self.updateLikesPrice();
     });
   };
 
-  // Mettre à jour les likes et le prix de l'encadré.
+  // Je mets à jour le total des likes après avoir ajouté ou supprimé un like.
   Controller.prototype.updateLikesPrice = function () {
     const self = this;
 
-    // J'appelle la méthode du modèle pour obtenir le total des likes.
-    this.model.getTotalLikes(function (totalLikes) {
-      const photographerPrice = self.storage.getPhotographerPrice();
-
-      const html = self.template.buildLikesPrice({ totalLikes, price: photographerPrice });
-
-      self.view.updateLikesPrice(html);
+    // Je récupère d'abord le total des likes des médias du photographe actuellement sélectionné.
+    self.model.getTotalLikes(self.photographerId, function (totalLikes) {
+      // Ensuite, je récupère le prix du photographe actuellement sélectionné.
+      self.model.getPhotographerPrice(self.photographerId, function (photographerPrice) {
+        // Je mets à jour les likes et le prix en utilisant les données récupérées.
+        self.view.updateLikesPrice({ totalLikes, photographerPrice });
+      });
     });
   };
 

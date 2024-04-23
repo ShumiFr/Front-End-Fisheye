@@ -72,7 +72,7 @@
   // J'ajoute la méthode buildLikeButton au prototype de Template.
   Template.prototype.buildLikeButton = function ({ id, likes }) {
     return `
-    <a class="card__btn" href="#" data-like-id="${id}">${likes} <i class='fa-solid fa-heart'></i></a>
+      <a class="card__btn" href="#" data-like-id="${id}">${likes}<i class='fa-solid fa-heart'></i></a>
     `;
   };
 

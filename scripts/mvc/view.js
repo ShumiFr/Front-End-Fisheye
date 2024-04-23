@@ -62,12 +62,11 @@
     }
   };
 
-  // Méthode pour mettre à jour le prix pour l'encadré.
-  View.prototype.updateLikesPrice = function (html) {
-    // J'insère le HTML généré dans l'élément approprié de votre interface utilisateur.
+  View.prototype.updateLikesPrice = function (data) {
+    const likesPriceHtml = this.template.buildLikesPrice(data);
     const likesPriceElement = document.querySelector(".likes-price");
     if (likesPriceElement) {
-      likesPriceElement.innerHTML = html;
+      likesPriceElement.innerHTML = likesPriceHtml;
     }
   };
 
