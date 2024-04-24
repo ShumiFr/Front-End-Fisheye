@@ -297,29 +297,41 @@
   height: 150px;
 }
 
-.photo-sort {
+.filters {
   display: flex;
   margin-left: 100px;
   margin-top: 20px;
   align-items: center;
+  cursor: pointer;
 }
 
-.photo-sort__title {
+.filters label {
   font-size: 18px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
 }
 
-.custom-select select {
+#filterSelect {
+  width: 170px;
+  height: 50px;
+  cursor: pointer;
   background: #901c1c;
   color: #fff;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
-  padding: 10px;
+  padding-left: 20px;
+  margin-left: 20px;
   border: none;
   border-radius: 5px;
-  margin-left: 20px;
+}
+
+#filterSelect:focus {
+  outline: none;
+}
+
+#filterSelect option {
+  border: solid 1px #ffffff;
 }
 
 form {

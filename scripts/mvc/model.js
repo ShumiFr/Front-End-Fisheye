@@ -12,6 +12,19 @@
     return this.storage.findPhotographers(query);
   };
 
+  // Méthode pour trouver tous les médias d'un photographe spécifique.
+  Model.prototype.findMediaByPhotographerId = function (photographerId, callback) {
+    // Je trouve tous les médias.
+    this.storage.findMedia(function (mediaData) {
+      // Je filtre les médias appartenant au photographe correspondant à l'ID.
+      const photographerMedia = mediaData.filter(
+        (media) => media.photographerId === photographerId
+      );
+      // J'appelle le callback avec les médias du photographe.
+      callback(photographerMedia);
+    });
+  };
+
   // Méthode pour obtenir le prix d'un photographe.
   Model.prototype.getPhotographerPrice = function (photographerId, callback) {
     // Je trouve le photographe correspondant à l'ID.
@@ -39,6 +52,20 @@
       // J'appelle le callback avec le média trouvé.
       callback(media);
     });
+  };
+
+  // Méthode pour trier les médias en fonction des critères sélectionnés.
+  Model.prototype.sortMedia = function (mediaData, sortBy) {
+    switch (sortBy) {
+      case "tilte":
+        return mediaData.sort((a, b) => a.title.localeCompare(b.title));
+      case "likes":
+        return mediaData.sort((a, b) => b.likes - a.likes);
+      case "date":
+        return mediaData.sort((a, b) => new Date(b.date) - new Date(a.date));
+      default:
+        return mediaData;
+    }
   };
 
   // Méthode pour mettre a jour le like d'un média.

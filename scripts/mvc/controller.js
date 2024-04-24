@@ -11,10 +11,16 @@
     self.view.bind("photoLiked", function (photoId) {
       self.toggleLike(photoId);
     });
+
+    // Je lie l'événement "sortByChanged" à la fonction handleSortBy.
+    self.view.bind("sortByChanged", function (selectedOption) {
+      self.handleSortBy(selectedOption);
+    });
   }
 
   // J'initialise le contrôleur.
   Controller.prototype.init = function () {
+    const self = this; // J'assigne la valeur de "this" à "self" pour pouvoir l'utiliser dans les fonctions de rappel.
     this.photographerId = this.getPhotographerIdFromUrl(); // J'obtiens l'ID du photographe à partir de l'URL.
     this.showHeader(); // J'affiche l'en-tête.
     this.getPhotographerName(); // J'obtiens le nom du photographe.
@@ -22,6 +28,8 @@
     this.showNameContactModal(); // J'affiche le nom dans la modal de contact.
     this.bindMediaCardsClick(); // Je lie les événements de clic sur les cartes de la galerie.
     this.showLikesPrice(); // J'affiche les likes et le prix.
+
+    self.view.showFilters(); // J'affiche les filtres.
   };
 
   // J'obtiens l'ID du photographe à partir de l'URL.
@@ -79,6 +87,50 @@
     });
   };
 
+  // J'affiche les likes et le prix.
+  Controller.prototype.showLikesPrice = function () {
+    const self = this;
+    // Je récupère d'abord le total des likes des médias du photographe actuellement sélectionné.
+    self.model.getTotalLikes(self.photographerId, function (totalLikes) {
+      // Ensuite, je récupère le prix du photographe actuellement sélectionné.
+      self.model.getPhotographerPrice(self.photographerId, function (photographerPrice) {
+        // J'affiche les likes et le prix en utilisant les données récupérées.
+        self.view.showLikesPrice({ totalLikes, photographerPrice });
+      });
+    });
+  };
+
+  // Fonction pour gérer le changement de critère de tri.
+  Controller.prototype.handleSortBy = async function (selectedOption) {
+    const self = this;
+    try {
+      // Récupérer le nom du photographe
+      const photographerName = await this.getPhotographerName();
+
+      // Récupérer les médias du photographe
+      const photographerMedia = await new Promise((resolve, reject) => {
+        self.model.findMedia(function (mediaData) {
+          const filteredMedia = mediaData.filter(
+            (media) => media.photographerId === self.photographerId
+          );
+          resolve(filteredMedia);
+        });
+      });
+
+      console.log("Media data before sorting:", photographerMedia);
+
+      // Trier les médias en fonction de l'option sélectionnée
+      const sortedMedia = self.model.sortMedia(photographerMedia, selectedOption);
+
+      console.log("Media data after sorting:", sortedMedia);
+
+      // Reconstruire la galerie avec les médias triés
+      self.view.rebuildGallery(sortedMedia);
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  };
+
   // Je lie les événements de clic sur les cartes de la galerie.
   Controller.prototype.bindMediaCardsClick = function () {
     const self = this;
@@ -100,16 +152,11 @@
     });
   };
 
-  // J'affiche les likes et le prix.
-  Controller.prototype.showLikesPrice = function () {
+  // J'affiche le média dans une modale.
+  Controller.prototype.showMediaInModal = function (mediaId) {
     const self = this;
-    // Je récupère d'abord le total des likes des médias du photographe actuellement sélectionné.
-    self.model.getTotalLikes(self.photographerId, function (totalLikes) {
-      // Ensuite, je récupère le prix du photographe actuellement sélectionné.
-      self.model.getPhotographerPrice(self.photographerId, function (photographerPrice) {
-        // J'affiche les likes et le prix en utilisant les données récupérées.
-        self.view.showLikesPrice({ totalLikes, photographerPrice });
-      });
+    self.model.findMediaById(mediaId, function (media) {
+      self.view.updateModalWithMedia(media);
     });
   };
 
@@ -140,14 +187,6 @@
         // Je mets à jour les likes et le prix en utilisant les données récupérées.
         self.view.updateLikesPrice({ totalLikes, photographerPrice });
       });
-    });
-  };
-
-  // J'affiche le média dans une modale.
-  Controller.prototype.showMediaInModal = function (mediaId) {
-    const self = this;
-    self.model.findMediaById(mediaId, function (media) {
-      self.view.updateModalWithMedia(media);
     });
   };
 

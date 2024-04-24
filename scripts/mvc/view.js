@@ -8,6 +8,7 @@
 
     this.$cardsList = qs(".photographer-gallery"); // Je sélectionne l'élément du DOM correspondant à la liste des cartes.
     this.$modal = document.getElementById("media_modal"); // Je sélectionne l'élément du DOM correspondant à la modale.
+    this.$filters = qs(".filters"); // Je sélectionne l'élément du DOM correspondant aux filtres.
   }
 
   // Méthode pour lier un événement à un gestionnaire d'événements.
@@ -22,6 +23,28 @@
         handler(id);
       });
     }
+
+    if (event === "sortByChanged") {
+      $delegate(self.$filters, "select", "change", function (event) {
+        event.preventDefault();
+        console.log("Sort by changed");
+
+        const selectedOption = event.target.value;
+        handler(selectedOption);
+      });
+    }
+  };
+
+  // Méthode pour render.
+  View.prototype.render = function (viewCmd, params) {
+    const self = this;
+    const viewCmdList = {
+      updateLikes: function () {
+        self._replaceWith(qs(`.photo-like-${params.id}`), self.template.buildLikeButton(params));
+      },
+    };
+
+    viewCmdList[viewCmd].call();
   };
 
   // Méthode pour lier les événements de clic sur les flèches de la modale.
@@ -49,20 +72,9 @@
     console.log("Next Media");
   };
 
+  // Méthode pour afficher le média précédent.
   View.prototype.showPreviousMedia = function () {
     console.log("Previous Media");
-  };
-
-  // Méthode pour render.
-  View.prototype.render = function (viewCmd, params) {
-    const self = this;
-    const viewCmdList = {
-      updateLikes: function () {
-        self._replaceWith(qs(`.photo-like-${params.id}`), self.template.buildLikeButton(params));
-      },
-    };
-
-    viewCmdList[viewCmd].call();
   };
 
   // Méthode pour afficher l'en-tête.
@@ -84,29 +96,22 @@
     });
   };
 
-  // Méthode pour mettre à jour le bouton de like.
-  View.prototype.updateLike = function (mediaId, likes, liked) {
-    const likeButton = qs(`[data-like-id="${mediaId}"]`, this.$cardsList);
-    if (likeButton) {
-      likeButton.innerHTML = `${likes} ${
-        liked ? '<i class="fa-solid fa-heart"></i>' : '<i class="far fa-heart"></i>'
-      }`;
-    }
-  };
-
-  // Méthode pour mettre à jour les likes et le prix.
-  View.prototype.updateLikesPrice = function (data) {
-    const likesPriceHtml = this.template.buildLikesPrice(data);
-    const likesPriceElement = document.querySelector(".likes-price");
-    if (likesPriceElement) {
-      likesPriceElement.innerHTML = likesPriceHtml;
-    }
-  };
-
   // Méthode pour afficher les likes et le prix.
   View.prototype.showLikesPrice = function (params) {
     this.$likesPrice = qs(".likes-price");
     this._replaceWith(this.$likesPrice, this.template.buildLikesPrice(params));
+  };
+
+  // Méthode pour afficher les filtres.
+  View.prototype.showFilters = function () {
+    this.$filters = qs(".filters");
+    this._replaceWith(this.$filters, this.template.buildFilters());
+  };
+
+  // Méthode pour reconstruire la galerie avec les médias triés.
+  View.prototype.rebuildGallery = function (mediaData) {
+    const galleryCards = mediaData.map((media) => this.template.buildGalleryCard(media));
+    this._replaceWith(this.$gallery, galleryCards.join(""));
   };
 
   // Méthode pour mettre à jour la modale avec le média.
@@ -159,6 +164,25 @@
     closeButton.addEventListener("click", () => {
       modal.style.display = "none";
     });
+  };
+
+  // Méthode pour mettre à jour le bouton de like.
+  View.prototype.updateLike = function (mediaId, likes, liked) {
+    const likeButton = qs(`[data-like-id="${mediaId}"]`, this.$cardsList);
+    if (likeButton) {
+      likeButton.innerHTML = `${likes} ${
+        liked ? '<i class="fa-solid fa-heart"></i>' : '<i class="far fa-heart"></i>'
+      }`;
+    }
+  };
+
+  // Méthode pour mettre à jour les likes et le prix.
+  View.prototype.updateLikesPrice = function (data) {
+    const likesPriceHtml = this.template.buildLikesPrice(data);
+    const likesPriceElement = document.querySelector(".likes-price");
+    if (likesPriceElement) {
+      likesPriceElement.innerHTML = likesPriceHtml;
+    }
   };
 
   // Méthode pour afficher le nom dans la modal de contact.

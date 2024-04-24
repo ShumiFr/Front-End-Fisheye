@@ -61,6 +61,17 @@
     return this.galleryCardTemplate(data); // Je génère le contenu de la carte de la galerie en utilisant le template.
   };
 
+  Template.prototype.buildFilters = function () {
+    return `
+      <label for="filterSelect">Filtrer par :</label>
+      <select class="filterSelect" id="filterSelect">
+        <option value="likes">Popularité</option>
+        <option value="date">Date</option>
+        <option value="title">Titre</option>
+      </select>
+    `;
+  };
+
   // J'ajoute la méthode buildLikesPrice au prototype de Template.
   Template.prototype.buildLikesPrice = function (data) {
     return `
