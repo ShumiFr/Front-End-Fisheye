@@ -61,6 +61,7 @@
     return this.galleryCardTemplate(data); // Je génère le contenu de la carte de la galerie en utilisant le template.
   };
 
+  // J'ajoute la méthode buildFilters au prototype de Template.
   Template.prototype.buildFilters = function () {
     return `
       <label for="filterSelect">Filtrer par :</label>

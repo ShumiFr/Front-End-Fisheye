@@ -24,6 +24,24 @@
       });
     }
 
+    if (event === "nextMedia") {
+      $delegate(self.$modal, "#right_arrow img", "click", function (event) {
+        event.preventDefault();
+        console.log("Next media button clicked");
+
+        handler();
+      });
+    }
+
+    if (event === "previousMedia") {
+      $delegate(self.$modal, "#left_arrow img", "click", function (event) {
+        event.preventDefault();
+        console.log("Next media button clicked");
+
+        handler();
+      });
+    }
+
     if (event === "sortByChanged") {
       $delegate(self.$filters, "select", "change", function (event) {
         event.preventDefault();
@@ -45,36 +63,6 @@
     };
 
     viewCmdList[viewCmd].call();
-  };
-
-  // Méthode pour lier les événements de clic sur les flèches de la modale.
-  View.prototype.bindMediaModalArrows = function () {
-    const self = this;
-
-    // Ajouter un gestionnaire d'événements pour le clic sur la modale.
-    self.$modal.addEventListener("click", function (event) {
-      // Vérifier si la cible du clic est l'image de la flèche de droite.
-      if (event.target && event.target.closest("#right_arrow img")) {
-        event.preventDefault();
-        self.showNextMedia();
-      }
-
-      // Vérifier si la cible du clic est l'image de la flèche de gauche.
-      if (event.target && event.target.closest("#left_arrow img")) {
-        event.preventDefault();
-        self.showPreviousMedia();
-      }
-    });
-  };
-
-  // Méthode pour afficher le média suivant.
-  View.prototype.showNextMedia = function () {
-    console.log("Next Media");
-  };
-
-  // Méthode pour afficher le média précédent.
-  View.prototype.showPreviousMedia = function () {
-    console.log("Previous Media");
   };
 
   // Méthode pour afficher l'en-tête.
@@ -154,10 +142,6 @@
 
     // Je mets à jour le style de la modale pour qu'elle soit affichée en flex.
     modal.style.display = "flex";
-    modal.showModal(); // J'affiche la modale après avoir mis à jour son contenu.
-
-    // Appel de la méthode pour lier les événements de clic sur les flèches de la modale.
-    this.bindMediaModalArrows();
 
     // J'ajoute un écouteur d'événements au bouton de fermeture.
     const closeButton = modal.querySelector(".media_close");

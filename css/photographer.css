@@ -302,7 +302,6 @@
   margin-left: 100px;
   margin-top: 20px;
   align-items: center;
-  cursor: pointer;
 }
 
 .filters label {
@@ -324,10 +323,6 @@
   margin-left: 20px;
   border: none;
   border-radius: 5px;
-}
-
-#filterSelect:focus {
-  outline: none;
 }
 
 #filterSelect option {

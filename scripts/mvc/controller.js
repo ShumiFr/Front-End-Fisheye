@@ -18,17 +18,24 @@
     });
   }
 
-  // J'initialise le contrôleur.
+  // Dans votre contrôleur
   Controller.prototype.init = function () {
     const self = this; // J'assigne la valeur de "this" à "self" pour pouvoir l'utiliser dans les fonctions de rappel.
-    this.photographerId = this.getPhotographerIdFromUrl(); // J'obtiens l'ID du photographe à partir de l'URL.
-    this.showHeader(); // J'affiche l'en-tête.
-    this.getPhotographerName(); // J'obtiens le nom du photographe.
-    this.showGalleryCards(); // J'affiche les cartes de la galerie.
-    this.showNameContactModal(); // J'affiche le nom dans la modal de contact.
-    this.bindMediaCardsClick(); // Je lie les événements de clic sur les cartes de la galerie.
-    this.showLikesPrice(); // J'affiche les likes et le prix.
+    self.photographerId = self.getPhotographerIdFromUrl(); // J'obtiens l'ID du photographe à partir de l'URL.
 
+    self.model.findMediaByPhotographerId(self.photographerId, function (mediaList) {
+      self.mediaList = mediaList; // Je trouve les médias du photographe.
+      console.log("mediaList", self.mediaList);
+    });
+
+    self.currentMediaIndex = 0; // Je définis l'index du média actuel sur 0.
+
+    self.showHeader(); // J'affiche l'en-tête.
+    self.getPhotographerName(); // J'obtiens le nom du photographe.
+    self.showGalleryCards(); // J'affiche les cartes de la galerie.
+    self.showNameContactModal(); // J'affiche le nom dans la modal de contact.
+    self.bindMediaCardsClick(); // Je lie les événements de clic sur les cartes de la galerie.
+    self.showLikesPrice(); // J'affiche les likes et le prix.
     self.view.showFilters(); // J'affiche les filtres.
   };
 
@@ -85,6 +92,32 @@
       // J'affiche les cartes de la galerie.
       self.view.showGalleryCards(galleryCards);
     });
+  };
+
+  // J'affiche le média suivant
+  Controller.prototype.showNextMedia = function () {
+    // Vérifiez si le média actuel n'est pas le dernier
+    if (this.currentMediaIndex < this.mediaList.length - 1) {
+      // Augmentez l'index du média actuel
+      this.currentMediaIndex++;
+      // Affichez le média suivant
+      this.view.updateModalWithMedia(this.mediaList[this.currentMediaIndex]);
+    } else {
+      console.log("Vous êtes déjà au dernier média.");
+    }
+  };
+
+  // J'affiche le média précedent.
+  Controller.prototype.showPreviousMedia = function () {
+    // Vérifiez si le média actuel n'est pas le premier
+    if (this.currentMediaIndex > 0) {
+      // Diminuez l'index du média actuel
+      this.currentMediaIndex--;
+      // Affichez le média précédent
+      this.view.updateModalWithMedia(this.mediaList[this.currentMediaIndex]);
+    } else {
+      console.log("Vous êtes déjà au premier média.");
+    }
   };
 
   // J'affiche les likes et le prix.
@@ -148,6 +181,14 @@
 
         // J'affiche le média dans la modal.
         self.showMediaInModal(mediaId);
+
+        self.view.bind("nextMedia", function () {
+          self.showNextMedia();
+        });
+
+        self.view.bind("previousMedia", function () {
+          self.showPreviousMedia();
+        });
       }
     });
   };

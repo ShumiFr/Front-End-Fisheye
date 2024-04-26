@@ -17,11 +17,10 @@
     // Je trouve tous les médias.
     this.storage.findMedia(function (mediaData) {
       // Je filtre les médias appartenant au photographe correspondant à l'ID.
-      const photographerMedia = mediaData.filter(
-        (media) => media.photographerId === photographerId
-      );
+      const mediaList = mediaData.filter((media) => media.photographerId === photographerId);
+      console.log("mediaList", mediaList);
       // J'appelle le callback avec les médias du photographe.
-      callback(photographerMedia);
+      callback(mediaList);
     });
   };
 
