@@ -56,7 +56,7 @@
   // Méthode pour trier les médias en fonction des critères sélectionnés.
   Model.prototype.sortMedia = function (mediaData, sortBy) {
     switch (sortBy) {
-      case "tilte":
+      case "title":
         return mediaData.sort((a, b) => a.title.localeCompare(b.title));
       case "likes":
         return mediaData.sort((a, b) => b.likes - a.likes);
