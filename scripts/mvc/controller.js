@@ -96,28 +96,21 @@
 
   // J'affiche le média suivant
   Controller.prototype.showNextMedia = function () {
-    // Vérifiez si le média actuel n'est pas le dernier
-    if (this.currentMediaIndex < this.mediaList.length - 1) {
-      // Augmentez l'index du média actuel
-      this.currentMediaIndex++;
-      // Affichez le média suivant
-      this.view.updateModalWithMedia(this.mediaList[this.currentMediaIndex]);
-    } else {
-      console.log("Vous êtes déjà au dernier média.");
-    }
+    // Augmentez l'index du média actuel
+    this.currentMediaIndex = (this.currentMediaIndex + 1) % this.mediaList.length;
+
+    // Affichez le média suivant
+    this.view.updateModalWithMedia(this.mediaList[this.currentMediaIndex]);
   };
 
-  // J'affiche le média précedent.
+  // J'affiche le média précédent.
   Controller.prototype.showPreviousMedia = function () {
-    // Vérifiez si le média actuel n'est pas le premier
-    if (this.currentMediaIndex > 0) {
-      // Diminuez l'index du média actuel
-      this.currentMediaIndex--;
-      // Affichez le média précédent
-      this.view.updateModalWithMedia(this.mediaList[this.currentMediaIndex]);
-    } else {
-      console.log("Vous êtes déjà au premier média.");
-    }
+    // Diminuez l'index du média actuel
+    this.currentMediaIndex =
+      (this.currentMediaIndex - 1 + this.mediaList.length) % this.mediaList.length;
+
+    // Affichez le média précédent
+    this.view.updateModalWithMedia(this.mediaList[this.currentMediaIndex]);
   };
 
   // J'affiche les likes et le prix.
