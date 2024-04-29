@@ -18,7 +18,6 @@
     this.storage.findMedia(function (mediaData) {
       // Je filtre les médias appartenant au photographe correspondant à l'ID.
       const mediaList = mediaData.filter((media) => media.photographerId === photographerId);
-      console.log("mediaList", mediaList);
       // J'appelle le callback avec les médias du photographe.
       callback(mediaList);
     });
@@ -48,6 +47,7 @@
     // Je trouve le média correspondant à l'ID.
     this.storage.findMedia(function (mediaData) {
       const media = mediaData.find((media) => String(media.id) === String(mediaId));
+      console.log(media);
       // J'appelle le callback avec le média trouvé.
       callback(media);
     });
@@ -55,6 +55,8 @@
 
   // Méthode pour trier les médias en fonction des critères sélectionnés.
   Model.prototype.sortMedia = function (mediaData, sortBy) {
+    // au lieu de mediaData mettre photographerID
+    // this.storage.findMediaById
     switch (sortBy) {
       case "title":
         return mediaData.sort((a, b) => a.title.localeCompare(b.title));

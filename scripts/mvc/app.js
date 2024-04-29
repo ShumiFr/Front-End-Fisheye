@@ -19,6 +19,5 @@
   }
 
   $on(window, "load", setView); // J'appelle la fonction setView lors du chargement de la page.
-
   $on(window, "hashchange", setView); // J'appelle la fonction setView lors du changement de hash dans l'URL.
 })();

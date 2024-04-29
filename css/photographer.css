@@ -117,7 +117,7 @@
   border-radius: 5px;
 }
 
-.card h3 {
+.card h2 {
   position: absolute;
   left: 5px;
   bottom: 10px;
@@ -130,6 +130,8 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 75%;
+  margin: 0;
+  line-height: 23px;
 }
 
 .card a {

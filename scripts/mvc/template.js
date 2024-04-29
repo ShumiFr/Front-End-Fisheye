@@ -17,7 +17,16 @@
     `;
 
     // Je définis le template pour les cartes de la galerie.
-    this.galleryCardTemplate = ({ id, title, likes, image, video, photographerName, liked }) => {
+    this.galleryCardTemplate = ({
+      id,
+      index,
+      title,
+      likes,
+      image,
+      video,
+      photographerName,
+      liked,
+    }) => {
       let mediaElement = "";
       if (image) {
         mediaElement = `<img src="/assets/images/${photographerName}/${image}" alt="${title}" />`;
@@ -32,9 +41,9 @@
       }
 
       return `
-          <div class="card" data-media-id="${id}">
+          <div class="card" data-media-id="${id}" data-media-index="${index}">
             ${mediaElement}
-            <h3>${title}</h3>
+            <h2>${title}</h2>
             <div class="photo-like-${id}">
               <a class="card__btn" href="#" data-like-id="${id}">${likes} ${
         liked ? '<i class="fa-solid fa-heart"></i>' : '<i class="far fa-heart"></i>'

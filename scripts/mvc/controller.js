@@ -25,7 +25,6 @@
 
     self.model.findMediaByPhotographerId(self.photographerId, function (mediaList) {
       self.mediaList = mediaList; // Je trouve les médias du photographe.
-      console.log("mediaList", self.mediaList);
     });
 
     self.currentMediaIndex = 0; // Je définis l'index du média actuel sur 0.
@@ -75,23 +74,24 @@
   Controller.prototype.showGalleryCards = async function () {
     const self = this;
     const photographerName = await this.getPhotographerName();
-    self.model.findMedia(function (mediaData) {
-      // Je filtre les médias qui appartiennent au photographe avec l'ID correspondant.
-      const photographerMedia = mediaData.filter(
-        (media) => media.photographerId === self.photographerId
-      );
-
-      // Je génère une carte pour chaque média du photographe.
-      const galleryCards = photographerMedia.map((media) => {
-        // J'ajoute le nom du photographe à l'objet media.
-        media.photographerName = photographerName;
-        // Je crée une carte de la galerie avec l'ID du média comme attribut de données.
-        return self.view.template.buildGalleryCard(media, media.id);
+    const mediaData = await new Promise((resolve, reject) => {
+      self.model.findMedia(function (data) {
+        resolve(data);
       });
-
-      // J'affiche les cartes de la galerie.
-      self.view.showGalleryCards(galleryCards);
     });
+
+    const galleryCards = [];
+    for (let i = 0; i < mediaData.length; i++) {
+      const media = mediaData[i];
+      if (media.photographerId === self.photographerId) {
+        media.photographerName = photographerName;
+        const card = self.view.template.buildGalleryCard(media, media.id);
+        galleryCards.push(card);
+      }
+    }
+
+    console.log("Media data:", mediaData);
+    self.view.showGalleryCards(galleryCards);
   };
 
   // J'affiche le média suivant
