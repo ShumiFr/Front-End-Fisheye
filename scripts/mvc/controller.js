@@ -96,21 +96,29 @@
 
   // J'affiche le média suivant
   Controller.prototype.showNextMedia = function () {
-    // Augmentez l'index du média actuel
-    this.currentMediaIndex = (this.currentMediaIndex + 1) % this.mediaList.length;
-
-    // Affichez le média suivant
-    this.view.updateModalWithMedia(this.mediaList[this.currentMediaIndex]);
+    const self = this;
+    // Incrémentez currentIndex
+    self.currentIndex++;
+    // Si currentIndex est plus grand que la longueur de la liste des médias, réinitialisez-le à 0
+    if (self.currentIndex >= self.mediaList.length) {
+      self.currentIndex = 0;
+    }
+    // Affichez le média à currentIndex
+    const nextMediaId = self.mediaList[self.currentIndex].id;
+    self.showMediaInModal(nextMediaId, self.currentIndex);
   };
 
-  // J'affiche le média précédent.
   Controller.prototype.showPreviousMedia = function () {
-    // Diminuez l'index du média actuel
-    this.currentMediaIndex =
-      (this.currentMediaIndex - 1 + this.mediaList.length) % this.mediaList.length;
-
-    // Affichez le média précédent
-    this.view.updateModalWithMedia(this.mediaList[this.currentMediaIndex]);
+    const self = this;
+    // Décrémentez currentIndex
+    self.currentIndex--;
+    // Si currentIndex est négatif, réinitialisez-le à la longueur de la liste des médias - 1
+    if (self.currentIndex < 0) {
+      self.currentIndex = self.mediaList.length - 1;
+    }
+    // Affichez le média à currentIndex
+    const previousMediaId = self.mediaList[self.currentIndex].id;
+    self.showMediaInModal(previousMediaId, self.currentIndex);
   };
 
   // J'affiche les likes et le prix.
@@ -171,9 +179,10 @@
         // Je récupère l'ID du média à partir de l'élément parent de l'image ou de la vidéo.
         const card = mediaElement.closest(".card");
         const mediaId = card.dataset.mediaId;
+        const mediaIndex = card.dataset.mediaIndex;
 
         // J'affiche le média dans la modal.
-        self.showMediaInModal(mediaId);
+        self.showMediaInModal(mediaId, mediaIndex);
 
         self.view.bind("nextMedia", function () {
           self.showNextMedia();
@@ -187,10 +196,11 @@
   };
 
   // J'affiche le média dans une modale.
-  Controller.prototype.showMediaInModal = function (mediaId) {
+  Controller.prototype.showMediaInModal = function (mediaId, mediaIndex) {
     const self = this;
     self.model.findMediaById(mediaId, function (media) {
-      self.view.updateModalWithMedia(media);
+      self.currentIndex = mediaIndex;
+      self.view.updateModalWithMedia(media, mediaIndex);
     });
   };
 

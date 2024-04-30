@@ -19,7 +19,7 @@
     // Je définis le template pour les cartes de la galerie.
     this.galleryCardTemplate = ({
       id,
-      index,
+      mediaIndex,
       title,
       likes,
       image,
@@ -41,7 +41,7 @@
       }
 
       return `
-          <div class="card" data-media-id="${id}" data-media-index="${index}">
+          <div class="card" data-media-id="${id}" data-media-index="${mediaIndex}">
             ${mediaElement}
             <h2>${title}</h2>
             <div class="photo-like-${id}">
