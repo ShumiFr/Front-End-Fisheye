@@ -193,6 +193,34 @@
         });
       }
     });
+
+    // J'ajoute un écouteur d'événements keydown à galleryContainer
+    galleryContainer.addEventListener("keydown", function (event) {
+      // Je vérifie si la touche pressée est la touche Entrée
+      if (event.key === "Enter" || event.keyCode === 13) {
+        // Je récupère l'élément parent de l'image ou de la vidéo qui a été cliqué
+        const mediaElement = event.target.closest(".card img, .card video");
+
+        // Je vérifie si l'élément cliqué est une image ou une vidéo
+        if (mediaElement) {
+          // Je récupère l'ID du média à partir de l'élément parent de l'image ou de la vidéo
+          const card = mediaElement.closest(".card");
+          const mediaId = card.dataset.mediaId;
+          const mediaIndex = card.dataset.mediaIndex;
+
+          // J'affiche le média dans la modal
+          self.showMediaInModal(mediaId, mediaIndex);
+
+          self.view.bind("nextMedia", function () {
+            self.showNextMedia();
+          });
+
+          self.view.bind("previousMedia", function () {
+            self.showPreviousMedia();
+          });
+        }
+      }
+    });
   };
 
   // J'affiche le média dans une modale.

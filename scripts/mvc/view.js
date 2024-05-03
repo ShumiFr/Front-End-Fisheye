@@ -22,6 +22,15 @@
         const id = parseInt(event.target.getAttribute("data-like-id"));
         handler(id);
       });
+
+      $delegate(self.$modal, ".card__btn", "keydow", function (event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+
+          const id = parseInt(event.target.getAttribute("data-like-id"));
+          handler(id);
+        }
+      });
     }
 
     if (event === "nextMedia") {
@@ -31,6 +40,14 @@
 
         handler();
       });
+
+      $delegate(self.$modal, "#right_arrow img", "keydown", function (event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+
+          handler();
+        }
+      });
     }
 
     if (event === "previousMedia") {
@@ -39,6 +56,14 @@
         console.log("Next media button clicked");
 
         handler();
+      });
+
+      $delegate(self.$modal, "#left_arrow img", "keydown", function (event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+
+          handler();
+        }
       });
     }
 
@@ -123,7 +148,7 @@
     // Je mets à jour le contenu de la modale avec le template et les données du média.
     modal.innerHTML = `
         <form method="dialog">
-            <button class="media_close">
+            <button  class="media_close">
                 <img src="assets/icons/close_picture.svg" />
             </button>
         </form>
@@ -144,10 +169,27 @@
     // Je mets à jour le style de la modale pour qu'elle soit affichée en flex.
     modal.style.display = "flex";
 
+    // Lorsque la modal est ouverte, je mets tabindex à -1 pour tous les éléments focusables en dehors de la modal.
+    const focusableElementsOutsideModal =
+      'button, a, img, video, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    document.querySelectorAll(focusableElementsOutsideModal).forEach((element) => {
+      // Assurez-vous que l'élément n'est pas dans la modale
+      if (!modal.contains(element)) {
+        element.setAttribute("tabindex", "-1");
+      } else {
+        element.setAttribute("tabindex", "0");
+      }
+    });
+
     // J'ajoute un écouteur d'événements au bouton de fermeture.
     const closeButton = modal.querySelector(".media_close");
     closeButton.addEventListener("click", () => {
       modal.style.display = "none";
+
+      // Lorsque la modal est fermée, je reinitialise tabindex à 0 pour tous les éléments focusables en dehors de la modal
+      document.querySelectorAll(focusableElementsOutsideModal).forEach((element) => {
+        element.setAttribute("tabindex", "0");
+      });
     });
   };
 

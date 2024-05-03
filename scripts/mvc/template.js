@@ -29,7 +29,7 @@
     }) => {
       let mediaElement = "";
       if (image) {
-        mediaElement = `<img src="/assets/images/${photographerName}/${image}" alt="${title}" />`;
+        mediaElement = `<img tabindex="0" src="/assets/images/${photographerName}/${image}" alt="${title}" />`;
       } else if (video) {
         mediaElement = `
             <div class="video-container">
