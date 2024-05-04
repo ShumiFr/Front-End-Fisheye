@@ -90,7 +90,6 @@
       }
     }
 
-    console.log("Media data:", mediaData);
     self.view.showGalleryCards(galleryCards);
   };
 
