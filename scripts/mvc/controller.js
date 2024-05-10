@@ -20,6 +20,7 @@
 
     self.model.findMediaByPhotographerId(self.photographerId, function (mediaList) {
       self.mediaList = mediaList; // Je trouve les médias du photographe.
+      console.log(self.mediaList);
     });
 
     self.currentMediaIndex = 0; // Je définis l'index du média actuel sur 0.
@@ -103,6 +104,8 @@
     if (self.currentIndex >= self.mediaList.length) {
       self.currentIndex = 0;
     }
+
+    console.log(self.mediaList, self.currentIndex);
     // Affichez le média à currentIndex
     const nextMediaId = self.mediaList[self.currentIndex].id;
     self.showMediaInModal(nextMediaId, self.currentIndex);
@@ -150,13 +153,12 @@
 
       console.log("Media data before sorting:", photographerMedia);
 
-      // Trier les médias en fonction de l'option sélectionnée
       const sortedMedia = self.model.sortMedia(photographerMedia, selectedOption);
 
       console.log("Media data after sorting:", sortedMedia);
+      self.mediaList = sortedMedia;
 
-      // Reconstruire la galerie avec les médias triés
-      self.view.rebuildGallery(sortedMedia);
+      self.view.rebuildGallery(self.mediaList);
     } catch (error) {
       console.error("An error occurred:", error);
     }

@@ -74,8 +74,8 @@
   Template.prototype.buildFilters = function () {
     return `
       <span class="filters-span">Filtrer par : </span>
-      <div role="listbox" aria-expanded="false" class="filters-container" tabindex="0">
-        <button aria-atomic="true" aria-live="polite" role="alert" class="filters-button">
+      <div role="listbox" aria-expanded="false" class="filters-container" >
+        <button tabindex="0" aria-atomic="true" aria-live="polite" role="alert" class="filters-button">
             -
         </button>
         <i aria-hidden="true" class="fa-solid fa-chevron-up"></i>
@@ -86,7 +86,7 @@
                 aria-selected="true"
                 style="pointer-events: all"
             >
-                <span value="likes" class="text">Popularité</span>
+                <span tabindex="0" value="likes" class="text">Popularité</span>
             </div>
             <div
                 role="option"
@@ -94,7 +94,7 @@
                 aria-selected="false"
                 style="pointer-events: all"
             >
-                <span value="date" class="text">Date</span>
+                <span tabindex="0" value="date" class="text">Date</span>
             </div>
             <div
                 role="option"
@@ -102,7 +102,7 @@
                 aria-selected="false"
                 style="pointer-events: all"
             >
-                <span value="title" class="text">Titre</span>
+                <span tabindex="0" value="title" class="text">Titre</span>
             </div>
         </div>
     </div>

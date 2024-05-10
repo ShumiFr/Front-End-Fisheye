@@ -148,9 +148,15 @@
   View.prototype.rebuildGallery = function (mediaData) {
     const galleryCards = mediaData.map((media) => this.template.buildGalleryCard(media));
     this._replaceWith(this.$gallery, galleryCards.join(""));
+
+    const galleryCardElements = document.querySelectorAll(".photographer-gallery .card");
+    galleryCardElements.forEach((card, index) => {
+      const mediaId = card.getAttribute("data-media-id");
+      card.setAttribute("data-media-index", index); // J'ajoute l'attribut data-media-index.
+      card.setAttribute("data-media-id", mediaId); // J'utilise l'ID récupéré depuis l'attribut data-media-id.
+    });
   };
 
-  // Méthode pour mettre à jour la modale avec le média.
   View.prototype.updateModalWithMedia = function (media) {
     const modal = document.getElementById("media_modal");
 
