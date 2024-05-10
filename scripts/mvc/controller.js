@@ -11,11 +11,6 @@
     self.view.bind("photoLiked", function (photoId) {
       self.toggleLike(photoId);
     });
-
-    // Je lie l'événement "sortByChanged" à la fonction handleSortBy.
-    self.view.bind("sortByChanged", function (selectedOption) {
-      self.handleSortBy(selectedOption);
-    });
   }
 
   // Dans votre contrôleur
@@ -36,6 +31,12 @@
     self.bindMediaCardsClick(); // Je lie les événements de clic sur les cartes de la galerie.
     self.showLikesPrice(); // J'affiche les likes et le prix.
     self.view.showFilters(); // J'affiche les filtres.
+    self.view.bind("openDropdown");
+
+    // Je lie l'événement "sortByChanged" à la fonction handleSortBy.
+    self.view.bind("sortMedia", function (selectedOption) {
+      self.handleSortBy(selectedOption);
+    });
   };
 
   // J'obtiens l'ID du photographe à partir de l'URL.
@@ -137,9 +138,6 @@
   Controller.prototype.handleSortBy = async function (selectedOption) {
     const self = this;
     try {
-      // Récupérer le nom du photographe
-      const photographerName = await this.getPhotographerName();
-
       // Récupérer les médias du photographe
       const photographerMedia = await new Promise((resolve, reject) => {
         self.model.findMedia(function (mediaData) {

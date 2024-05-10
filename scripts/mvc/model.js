@@ -55,8 +55,6 @@
 
   // Méthode pour trier les médias en fonction des critères sélectionnés.
   Model.prototype.sortMedia = function (mediaData, sortBy) {
-    // au lieu de mediaData mettre photographerID
-    // this.storage.findMediaById
     switch (sortBy) {
       case "title":
         return mediaData.sort((a, b) => a.title.localeCompare(b.title));

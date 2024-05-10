@@ -67,13 +67,35 @@
       });
     }
 
-    if (event === "sortByChanged") {
-      $delegate(self.$filters, "select", "change", function (event) {
+    if (event === "openDropdown") {
+      $delegate(self.$filters, "button", "click", function (event) {
         event.preventDefault();
-        console.log("Sort by changed");
+        const dropdown = qs(".filters-dropdown");
+        const icon = qs(".filters-container i");
 
-        const selectedOption = event.target.value;
+        dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
+
+        if (dropdown.style.display === "block") {
+          icon.classList.remove("fa-chevron-up");
+          icon.classList.add("fa-chevron-down");
+        } else {
+          icon.classList.remove("fa-chevron-down");
+          icon.classList.add("fa-chevron-up");
+        }
+      });
+    }
+
+    if (event === "sortMedia") {
+      this.$filtersDropdown = qs(".filters-dropdown");
+      $delegate(self.$filtersDropdown, "span", "click", function (event) {
+        event.preventDefault();
+
+        const selectedOption = event.target.getAttribute("value");
         handler(selectedOption);
+
+        const selectedOptionText = event.target.innerText;
+        const button = self.$filters.querySelector("button"); // Remplacez 'button' par le sélecteur de votre bouton
+        button.textContent = selectedOptionText;
       });
     }
   };
