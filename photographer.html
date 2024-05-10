@@ -38,18 +38,18 @@
           </div>
           <img src="assets/icons/close.svg" onclick="closeModal()" />
         </header>
-        <form>
+        <form class="contact_form">
           <div>
             <label>Prénom</label>
-            <input />
+            <input type="text" id="name" name="name" />
             <label>Nom</label>
-            <input />
+            <input type="text" id="firstName" name="firstName" />
             <label>Email</label>
-            <input />
+            <input type="email" id="email" name="email" />
             <label>Votre message</label>
-            <textarea></textarea>
+            <textarea type="text" id="message" name="message"></textarea>
           </div>
-          <button class="contact_button">Envoyer</button>
+          <button onclick="submitContact()" type="button" class="contact_button">Envoyer</button>
         </form>
       </div>
     </div>

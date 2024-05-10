@@ -31,3 +31,18 @@ function closeModal() {
     element.removeAttribute("data-previous-tabindex");
   });
 }
+
+function submitContact() {
+  const form = document.querySelector(".contact_form");
+  const name = document.getElementById("name").value;
+  const firstName = document.getElementById("firstName").value;
+  const email = document.getElementById("email").value;
+  const message = document.getElementById("message").value;
+  console.log(
+    `Je confirme avoir reçu les informations suivantes : Nom : ${name}, Prénom : ${firstName}, Email : ${email}, Message : "${message}"`
+  );
+
+  closeModal();
+  alert("Votre message a bien été envoyé !");
+  form.reset();
+}
