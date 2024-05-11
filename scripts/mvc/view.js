@@ -94,8 +94,21 @@
         handler(selectedOption);
 
         const selectedOptionText = event.target.innerText;
-        const button = self.$filters.querySelector("button"); // Remplacez 'button' par le sélecteur de votre bouton
+        const button = self.$filters.querySelector("button");
         button.textContent = selectedOptionText;
+      });
+
+      $delegate(self.$filtersDropdown, "span", "keydown", function (event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+
+          const selectedOption = event.target.getAttribute("value");
+          handler(selectedOption);
+
+          const selectedOptionText = event.target.innerText;
+          const button = self.$filters.querySelector("button");
+          button.textContent = selectedOptionText;
+        }
       });
     }
   };
