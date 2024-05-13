@@ -248,6 +248,17 @@
         element.setAttribute("tabindex", "0");
       });
     });
+
+    closeButton.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        modal.style.display = "none";
+
+        // Lorsque la modal est fermée, je reinitialise tabindex à 0 pour tous les éléments focusables en dehors de la modal
+        document.querySelectorAll(focusableElementsOutsideModal).forEach((element) => {
+          element.setAttribute("tabindex", "0");
+        });
+      }
+    });
   };
 
   // Méthode pour mettre à jour le bouton de like.
