@@ -73,38 +73,38 @@
   // J'ajoute la méthode buildFilters au prototype de Template.
   Template.prototype.buildFilters = function () {
     return `
-      <span class="filters-span">Filtrer par : </span>
-      <div role="listbox" aria-expanded="false" class="filters-container" >
-        <button tabindex="0" aria-atomic="true" aria-live="polite" role="alert" class="filters-button">
-            -
-        </button>
-        <i aria-hidden="true" class="fa-solid fa-chevron-up"></i>
-        <div class="filters-dropdown">
-            <div
-                role="option"
-                aria-checked="true"
-                aria-selected="true"
-                style="pointer-events: all"
-            >
-                <span tabindex="0" value="likes" class="text">Popularité</span>
-            </div>
-            <div
-                role="option"
-                aria-checked="false"
-                aria-selected="false"
-                style="pointer-events: all"
-            >
-                <span tabindex="0" value="date" class="text">Date</span>
-            </div>
-            <div
-                role="option"
-                aria-checked="false"
-                aria-selected="false"
-                style="pointer-events: all"
-            >
-                <span tabindex="0" value="title" class="text">Titre</span>
-            </div>
+    <span class="filters-span">Filtrer par : </span>
+    <div role="listbox" aria-expanded="false" class="filters-container" >
+      <button tabindex="0" aria-label="Ouvrir la liste de filtres pour la galerie" role="button" class="filters-button">
+        -
+      </button>
+      <i aria-hidden="true" class="fa-solid fa-chevron-up"></i>
+      <div class="filters-dropdown">
+        <div
+          role="option"
+          aria-checked="true"
+          aria-selected="true"
+          style="pointer-events: all"
+        >
+          <span aria-label="Filtré par popularité" tabindex="0" value="likes" class="text">Popularité</span>
         </div>
+        <div
+          role="option"
+          aria-checked="false"
+          aria-selected="false"
+          style="pointer-events: all"
+        >
+          <span aria-label="Filtré par date" tabindex="0" value="date" class="text">Date</span>
+        </div>
+        <div
+          role="option"
+          aria-checked="false"
+          aria-selected="false"
+          style="pointer-events: all"
+        >
+          <span aria-label="Filtré dans l'ordre alphabétique" tabindex="0" value="title" class="text">Titre</span>
+        </div>
+      </div>
     </div>
     `;
   };

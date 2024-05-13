@@ -189,21 +189,21 @@
     // Je mets à jour le contenu de la modale avec le template et les données du média.
     modal.innerHTML = `
         <form method="dialog">
-            <button  class="media_close">
+            <div  class="media_close">
                 <img src="assets/icons/close_picture.svg" />
-            </button>
+            </div>
         </form>
         <div class="media_modal_button">
-            <button id="left_arrow">
+            <div id="left_arrow">
                 <img src="assets/icons/arrow.svg" />
-            </button>
+            </div>
             <div class="media_modal_content">
                 ${mediaContent} <!-- J'insère l'image ou la vidéo ici. -->
                 <h2 id="media_modal_title">${media.title}</h2> <!-- J'utilise le titre du média. -->
             </div>
-            <button id="right_arrow">
+            <div id="right_arrow">
                 <img src="assets/icons/arrow.svg" />
-            </button>
+            </div>
         </div>
     `;
 
