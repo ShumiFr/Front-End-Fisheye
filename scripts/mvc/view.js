@@ -36,14 +36,12 @@
     if (event === "nextMedia") {
       $delegate(self.$modal, "#right_arrow img", "click", function (event) {
         event.preventDefault();
-
         handler();
       });
 
       $delegate(self.$modal, "#right_arrow img", "keydown", function (event) {
         if (event.key === "Enter") {
           event.preventDefault();
-
           handler();
         }
       });
@@ -51,7 +49,6 @@
       document.addEventListener("keydown", function (event) {
         if (event.key === "ArrowRight") {
           event.preventDefault();
-
           handler();
         }
       });
@@ -60,23 +57,19 @@
     if (event === "previousMedia") {
       $delegate(self.$modal, "#left_arrow img", "click", function (event) {
         event.preventDefault();
-
         handler();
       });
 
       $delegate(self.$modal, "#left_arrow img", "keydown", function (event) {
         if (event.key === "Enter") {
           event.preventDefault();
-
           handler();
-          document.getElementById("left_arrow").focus();
         }
       });
 
       document.addEventListener("keydown", function (event) {
         if (event.key === "ArrowLeft") {
           event.preventDefault();
-          console.log("Left arrow key pressed");
           handler();
         }
       });
@@ -130,6 +123,21 @@
         }
       });
     }
+
+    if (event === "stayFocusInFilters") {
+      this.$filtersDropdown = qs(".filters-dropdown");
+      $delegate(this.$filtersDropdown, "span", "keydown", function (event) {
+        if (event.key === "Tab") {
+          event.preventDefault();
+          const currentIndex = Array.from(self.$filtersDropdown.querySelectorAll("span")).indexOf(
+            event.target
+          );
+          const nextIndex =
+            currentIndex === self.$filtersDropdown.childElementCount - 1 ? 0 : currentIndex + 1;
+          self.$filtersDropdown.querySelectorAll("span")[nextIndex].focus();
+        }
+      });
+    }
   };
 
   // Méthode pour render.
@@ -174,6 +182,8 @@
   View.prototype.showFilters = function () {
     this.$filters = qs(".filters");
     this._replaceWith(this.$filters, this.template.buildFilters());
+
+    this.bind("stayFocusInFilters");
   };
 
   // Méthode pour reconstruire la galerie avec les médias triés.

@@ -30,7 +30,12 @@ function closeModal() {
     element.tabIndex = element.getAttribute("data-previous-tabindex");
     element.removeAttribute("data-previous-tabindex");
   });
+
+  setTimeout(() => {
+    document.querySelector(".contact_button").focus();
+  }, 0);
 }
+
 function submitContact() {
   const form = document.querySelector(".contact_form");
   const firstName = document.getElementById("firstName").value;
