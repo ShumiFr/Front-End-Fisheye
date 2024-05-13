@@ -31,20 +31,24 @@ function closeModal() {
     element.removeAttribute("data-previous-tabindex");
   });
 }
-
 function submitContact() {
   const form = document.querySelector(".contact_form");
-  const name = document.getElementById("name").value;
   const firstName = document.getElementById("firstName").value;
+  const lastName = document.getElementById("lastName").value;
   const email = document.getElementById("email").value;
   const message = document.getElementById("message").value;
-  console.log(
-    `Je confirme avoir reçu les informations suivantes : Nom : ${name}, Prénom : ${firstName}, Email : ${email}, Message : "${message}"`
-  );
 
-  closeModal();
-  alert("Votre message a bien été envoyé !");
-  form.reset();
+  if (firstName && lastName && email && message) {
+    console.log(
+      `Je confirme avoir reçu les informations suivantes : Nom : ${lastName}, Prénom : ${firstName}, Email : ${email}, Message : "${message}"`
+    );
+
+    closeModal();
+    alert("Votre message a bien été envoyé !");
+    form.reset();
+  } else {
+    alert("Veuillez remplir tous les champs du formulaire.");
+  }
 }
 
 const closeModalButton = document.getElementById("close-modal");
