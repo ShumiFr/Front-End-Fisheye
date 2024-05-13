@@ -238,10 +238,11 @@
 }
 
 .media_modal_content {
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 80%;
+  height: 700px;
 }
 
 #media_modal_img,

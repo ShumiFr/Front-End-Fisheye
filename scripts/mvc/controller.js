@@ -109,6 +109,7 @@
     // Affichez le média à currentIndex
     const nextMediaId = self.mediaList[self.currentIndex].id;
     self.showMediaInModal(nextMediaId, self.currentIndex);
+    document.getElementById("right_arrow").focus();
   };
 
   Controller.prototype.showPreviousMedia = function () {
@@ -122,6 +123,7 @@
     // Affichez le média à currentIndex
     const previousMediaId = self.mediaList[self.currentIndex].id;
     self.showMediaInModal(previousMediaId, self.currentIndex);
+    document.getElementById("left_arrow").focus();
   };
 
   // J'affiche les likes et le prix.

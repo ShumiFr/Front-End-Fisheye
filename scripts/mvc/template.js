@@ -76,10 +76,10 @@
     <span class="filters-span">Filtrer par : </span>
     <div role="listbox" aria-expanded="false" class="filters-container" >
       <button tabindex="0" aria-label="Ouvrir la liste de filtres pour la galerie" role="button" class="filters-button">
-        -
+        Popularité
       </button>
       <i aria-hidden="true" class="fa-solid fa-chevron-up"></i>
-      <div class="filters-dropdown">
+      <div class="filters-dropdown" style="display: none">
         <div
           role="option"
           aria-checked="true"

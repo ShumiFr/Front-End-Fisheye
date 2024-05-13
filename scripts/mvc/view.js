@@ -36,7 +36,6 @@
     if (event === "nextMedia") {
       $delegate(self.$modal, "#right_arrow img", "click", function (event) {
         event.preventDefault();
-        console.log("Next media button clicked");
 
         handler();
       });
@@ -52,7 +51,7 @@
       document.addEventListener("keydown", function (event) {
         if (event.key === "ArrowRight") {
           event.preventDefault();
-          console.log("Right arrow key pressed");
+
           handler();
         }
       });
@@ -61,7 +60,6 @@
     if (event === "previousMedia") {
       $delegate(self.$modal, "#left_arrow img", "click", function (event) {
         event.preventDefault();
-        console.log("Next media button clicked");
 
         handler();
       });
@@ -71,6 +69,7 @@
           event.preventDefault();
 
           handler();
+          document.getElementById("left_arrow").focus();
         }
       });
 
@@ -84,7 +83,7 @@
     }
 
     if (event === "openDropdown") {
-      $delegate(self.$filters, "button", "click", function (event) {
+      $delegate(self.$filters, "button, i", "click", function (event) {
         event.preventDefault();
         const dropdown = qs(".filters-dropdown");
         const icon = qs(".filters-container i");
@@ -105,6 +104,7 @@
       this.$filtersDropdown = qs(".filters-dropdown");
       $delegate(self.$filtersDropdown, "span", "click", function (event) {
         event.preventDefault();
+        const dropdown = qs(".filters-dropdown");
 
         const selectedOption = event.target.getAttribute("value");
         handler(selectedOption);
@@ -112,11 +112,13 @@
         const selectedOptionText = event.target.innerText;
         const button = self.$filters.querySelector("button");
         button.textContent = selectedOptionText;
+        dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
       });
 
       $delegate(self.$filtersDropdown, "span", "keydown", function (event) {
         if (event.key === "Enter") {
           event.preventDefault();
+          const dropdown = qs(".filters-dropdown");
 
           const selectedOption = event.target.getAttribute("value");
           handler(selectedOption);
@@ -124,6 +126,7 @@
           const selectedOptionText = event.target.innerText;
           const button = self.$filters.querySelector("button");
           button.textContent = selectedOptionText;
+          dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
         }
       });
     }
@@ -210,7 +213,7 @@
             </div>
         </form>
         <div class="media_modal_button">
-            <div id="left_arrow">
+            <div id="left_arrow" >
                 <img alt="Naviguer vers l'image précédente" src="assets/icons/arrow.svg" />
             </div>
             <div class="media_modal_content">
