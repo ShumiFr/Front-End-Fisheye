@@ -34,15 +34,18 @@
     }
 
     if (event === "nextMedia") {
-      $delegate(self.$modal, "#right_arrow img", "click", function (event) {
+      $delegate(self.$modal, "#right_arrow", "click", function (event) {
         event.preventDefault();
         handler();
       });
 
-      $delegate(self.$modal, "#right_arrow img", "keydown", function (event) {
+      $delegate(self.$modal, "#right_arrow", "keydown", function (event) {
         if (event.key === "Enter") {
           event.preventDefault();
           handler();
+          setTimeout(() => {
+            document.getElementById("right_arrow").focus();
+          }, 0);
         }
       });
 
@@ -55,15 +58,19 @@
     }
 
     if (event === "previousMedia") {
-      $delegate(self.$modal, "#left_arrow img", "click", function (event) {
+      $delegate(self.$modal, "#left_arrow", "click", function (event) {
         event.preventDefault();
         handler();
       });
 
-      $delegate(self.$modal, "#left_arrow img", "keydown", function (event) {
+      $delegate(self.$modal, "#left_arrow", "keydown", function (event) {
         if (event.key === "Enter") {
           event.preventDefault();
+
           handler();
+          setTimeout(() => {
+            document.getElementById("left_arrow").focus();
+          }, 0);
         }
       });
 
@@ -223,15 +230,15 @@
             </div>
         </form>
         <div class="media_modal_button">
-            <div id="left_arrow" >
-                <img alt="Naviguer vers l'image précédente" src="assets/icons/arrow.svg" />
+            <div>
+                <img id="left_arrow" alt="Naviguer vers l'image précédente" src="assets/icons/arrow.svg" />
             </div>
             <div class="media_modal_content">
                 ${mediaContent} <!-- J'insère l'image ou la vidéo ici. -->
                 <h2 id="media_modal_title">${media.title}</h2> <!-- J'utilise le titre du média. -->
             </div>
-            <div id="right_arrow">
-                <img alt="Naviguer vers l'image suivante" src="assets/icons/arrow.svg" />
+            <div>
+                <img id="right_arrow" alt="Naviguer vers l'image suivante" src="assets/icons/arrow.svg" />
             </div>
         </div>
     `;
