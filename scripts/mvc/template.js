@@ -5,15 +5,15 @@
   function Template() {
     // Je définis le template pour l'en-tête.
     this.headerTemplate = ({ name, city, tagline, portrait }) => `
-        <div class="photographer-header__description">
-            <h1 class="name">${name}</h1>
-            <p class="city">${city}</p>
-            <p class="tagline">${tagline}</p>
-        </div>
-        <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
-        <div class="photographer-header__img">
-            <img src="/assets/photographers/${portrait}" alt="${name}" />
-        </div>
+      <div class="photographer-header__description">
+        <h1 class="name" alt="${name}">${name}</h1>
+        <h2 class="city" alt="${city}">${city}</p>
+        <h2 class="tagline" alt="${tagline}">${tagline}</p>
+      </div>
+      <button aria-label="Contactez-moi" class="contact_button" onclick="displayModal()">Contactez-moi</button>
+      <div class="photographer-header__img">
+        <img src="/assets/photographers/${portrait}" alt="${name}" />
+      </div>
     `;
 
     // Je définis le template pour les cartes de la galerie.
@@ -29,11 +29,11 @@
     }) => {
       let mediaElement = "";
       if (image) {
-        mediaElement = `<img tabindex="0" src="/assets/images/${photographerName}/${image}" alt="${title}" />`;
+        mediaElement = `<img tabindex="0" src="/assets/images/${photographerName}/${image}" alt="Photo de ${photographerName} nommée ${title}" />`;
       } else if (video) {
         mediaElement = `
             <div class="video-container">
-              <video src="/assets/images/${photographerName}/${video}" alt="${title}"></video>
+              <video src="/assets/images/${photographerName}/${video}" alt="Vidéo de ${photographerName} nommée ${title}"></video>
             </div>
           `;
       } else {
@@ -112,8 +112,8 @@
   // J'ajoute la méthode buildLikesPrice au prototype de Template.
   Template.prototype.buildLikesPrice = function (data) {
     return `
-      <p class="likes">${data.totalLikes} <i class='fa-solid fa-heart'></i></p>
-      <p class="price">${data.photographerPrice}€ / jour</p>
+      <h2 class="likes">${data.totalLikes} <i class='fa-solid fa-heart'></i></p>
+      <h2 class="price">${data.photographerPrice}€ / jour</p>
     `;
   };
 

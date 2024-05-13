@@ -156,15 +156,15 @@
   border-radius: 5px 5px 0 0;
 }
 
-.likes-price p {
+.likes-price h2 {
   font-size: 24px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
 }
 
-.likes-price p:first-child {
-  margin-right: 80px;
+.likes-price h2:first-child {
+  margin-right: 50px;
 }
 
 #contact_modal {

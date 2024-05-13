@@ -46,3 +46,12 @@ function submitContact() {
   alert("Votre message a bien été envoyé !");
   form.reset();
 }
+
+const closeModalButton = document.getElementById("close-modal");
+
+closeModalButton.addEventListener("click", closeModal);
+closeModalButton.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    closeModal();
+  }
+});
