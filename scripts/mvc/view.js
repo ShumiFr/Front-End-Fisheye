@@ -48,6 +48,14 @@
           handler();
         }
       });
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "ArrowRight") {
+          event.preventDefault();
+          console.log("Right arrow key pressed");
+          handler();
+        }
+      });
     }
 
     if (event === "previousMedia") {
@@ -62,6 +70,14 @@
         if (event.key === "Enter") {
           event.preventDefault();
 
+          handler();
+        }
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          console.log("Left arrow key pressed");
           handler();
         }
       });
